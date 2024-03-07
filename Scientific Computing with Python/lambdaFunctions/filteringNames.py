@@ -29,6 +29,11 @@ sorted_by_surnames = sorted(people, key=sorted_people_surname)
 sorted_by_name = sorted(people, key=sorted_people_name)
 sorted_by_age = sorted(people, key=sorted_people_age)
 
+ages = 0
+ages = map(lambda person: person['age'], people)
+sum_ages = sum(ages)
+
 print(sorted_by_surnames)
 print(sorted_by_name)
 print(sorted_by_age)
+print(sum_ages)
