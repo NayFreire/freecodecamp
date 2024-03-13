@@ -24,26 +24,28 @@ def move(n, source, auxiliary, target):
         remainder = (number + 1) % 3
         if remainder == 1:
             print(f'Move {number + 1} allowed between {source} and {target}')
-            forward = False
-            if not rods[target]: #If the target rod is empty...
-                forward = True #...move the disk foward
-            elif rods[source] and rods[source][-1] < rods[target][-1]: #if the source is not empty and the last disk on source is lower than the last disk in target...
-                forward = True #...move forward
-            if forward: #if it's possible to move foward...
-                print(f'Moving disk {rods[source][-1]} from {source} to {target}')
-
-                rods[target].append(rods[source].pop()) #... move last disk from source and add it to target
-
-            else: #if it's not possible to move foward...
-                print(f'Moving disk {rods[target][-1]} from {target} to {source}')
-                rods[source].append(rods[target].pop())#... move last disk from target and add it to source
             
-            #display our progress
-            print(rods)
         elif remainder == 2:
             print(f'Move {number + 1} allowed between {source} and {auxiliary}')
         elif remainder == 0:
             print(f'Move {number + 1} allowed between {auxiliary} and {target}')
 
+def make_allowed_move(rod1, rod2):
+    forward = False
+    if not rods[rod2]: #If the rod2 rod is empty...
+        forward = True #...move the disk foward
+    elif rods[rod1] and rods[rod1][-1] < rods[rod2][-1]: #if the rod1 is not empty and the last disk on rod1 is lower than the last disk in rod2...
+        forward = True #...move forward
+    if forward: #if it's possible to move foward...
+        print(f'Moving disk {rods[rod1][-1]} from {rod1} to {rod2}')
+
+        rods[rod2].append(rods[rod1].pop()) #... move last disk from rod1 and add it to rod2
+
+    else: #if it's not possible to move foward...
+        print(f'Moving disk {rods[rod2][-1]} from {rod2} to {rod1}')
+        rods[rod1].append(rods[rod2].pop())#... move last disk from target and add it to rod1
+    
+    #display our progress
+    print(rods)
 #initiate call from source A to target C with auxiliary B
 move(NUMBER_OF_DISKS, 'A', 'B', 'C')
