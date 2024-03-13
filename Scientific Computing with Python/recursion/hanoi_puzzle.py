@@ -24,11 +24,14 @@ def move(n, source, auxiliary, target):
         remainder = (number + 1) % 3
         if remainder == 1:
             print(f'Move {number + 1} allowed between {source} and {target}')
+            make_allowed_move(source, target)
             
         elif remainder == 2:
             print(f'Move {number + 1} allowed between {source} and {auxiliary}')
+            make_allowed_move(source, auxiliary)
         elif remainder == 0:
             print(f'Move {number + 1} allowed between {auxiliary} and {target}')
+            make_allowed_move(auxiliary, target)
 
 def make_allowed_move(rod1, rod2):
     forward = False
@@ -46,6 +49,6 @@ def make_allowed_move(rod1, rod2):
         rods[rod1].append(rods[rod2].pop())#... move last disk from target and add it to rod1
     
     #display our progress
-    print(rods)
+    print(rods, '\n\n')
 #initiate call from source A to target C with auxiliary B
 move(NUMBER_OF_DISKS, 'A', 'B', 'C')
