@@ -1,4 +1,4 @@
-NUMBER_OF_DISKS = 3
+NUMBER_OF_DISKS = 5
 number_of_moves = 2**NUMBER_OF_DISKS - 1
 
 rods = {
@@ -23,12 +23,19 @@ def move(n, source, auxiliary, target):
     for number in range(number_of_moves):
         remainder = (number + 1) % 3
         if remainder == 1:
-            print(f'Move {number + 1} allowed between {source} and {target}')
-            make_allowed_move(source, target)
-            
+            if n % 2 != 0: #verifying if the number of disks is odd
+                print(f'Move {number + 1} allowed between {source} and {target}')
+                make_allowed_move(source, target)
+            else:
+                print(f'Move {number + 1} allowed between {source} and {auxiliary}')
+                make_allowed_move(source, auxiliary)
         elif remainder == 2:
-            print(f'Move {number + 1} allowed between {source} and {auxiliary}')
-            make_allowed_move(source, auxiliary)
+            if n % 2 != 0:
+                print(f'Move {number + 1} allowed between {source} and {auxiliary}')
+                make_allowed_move(source, auxiliary)
+            else:
+                print(f'Move {number + 1} allowed between {source} and {target}')
+                make_allowed_move(source, target)
         elif remainder == 0:
             print(f'Move {number + 1} allowed between {auxiliary} and {target}')
             make_allowed_move(auxiliary, target)
