@@ -31,3 +31,12 @@ class Board:
         else: # If this is the last line oin the board...
                 board_string += lower_lines #... use the lower_lines
         return board_string
+    
+    def find_empty_cell(self):
+        for row, contents in enumerate(self.board):
+            try:
+                col = contents.index(0)
+                return row, col
+            except ValueError:
+                pass
+        return None
