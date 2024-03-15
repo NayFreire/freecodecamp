@@ -5,7 +5,7 @@ def merge_sort(array):
     left_part = array[0: middle_point]
     right_part = array[middle_point:len(array)] #also works with array[middle_point:]
 
-    print(array, left_part, right_part)
+    #print(array, left_part, right_part)
     merge_sort(left_part)
     merge_sort(right_part)
 
@@ -26,9 +26,18 @@ def merge_sort(array):
     
     while left_array_index < len(left_part): # while the left index hasn't got to the last element of the left_part...
         array[sorted_index] = left_part[left_array_index] #... the sorted array will take the remaining elements of the left_part
+        left_array_index += 1 # And left_array_index will be incremented by 1, so it can select the next element to sort
         sorted_index += 1 # And the sorted_index will be incremented by 1 so the elements can be assigned to it's correct places
     
     while right_array_index < len(right_part): # while the right index hasn't got to the last element of the right_part...
         array[sorted_index] = right_part[right_array_index] #... the sorted array will take the remaining elements of the right_part
+        right_array_index += 1 # And right_array_index will be incremented by 1, so it can select the next element to sort
         sorted_index += 1 # And the sorted_index will be incremented by 1 so the elements can be assigned to it's correct places
-merge_sort([3, 4, 2, 7, 10, 5, 1])
+        
+
+if __name__ == '__main__':
+    numbers = [4, 10, 6, 14, 2, 1, 8, 5]
+    print('Unsorted array:')
+    print(numbers)
+    merge_sort(numbers)
+    print('Sorted array: ' + str(numbers))
