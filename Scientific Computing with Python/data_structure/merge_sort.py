@@ -1,4 +1,6 @@
 def merge_sort(array):
+    if len(array) <= 1: # the minimal size of an array is 1, if an array is empty, there's no way to continue the recursion
+        return
     middle_point = len(array) // 2 #get the middle point of the array so it can be divided by 2
     left_part = array[0: middle_point]
     right_part = array[middle_point:len(array)] #also works with array[middle_point:]
