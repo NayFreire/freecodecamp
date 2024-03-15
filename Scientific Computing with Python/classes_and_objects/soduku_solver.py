@@ -49,3 +49,13 @@ class Board:
             self.board[row][col] != num
             for row in range(9)
         ) #Also can be written like all(self.board[row[col] != num for row in range(9))
+
+    def valid_in_square(self, row, col, num):
+        row_start = (row // 3) * 3 # Getting th index of the row that starts the square in question
+        col_start = (col // 3) * 3 # Getting th index of the column that starts the square in question
+
+        for row_no in range(row_start, row_start + 3):
+            for col_no in range(col_start, col_start + 3):
+                if self.board[row_no][col_no] == num: # If the number in question is already inside the square...
+                    return False #... return False, meaning it cannot go there
+        return True #If the number is not in the square already, return True, meaning it can go there
