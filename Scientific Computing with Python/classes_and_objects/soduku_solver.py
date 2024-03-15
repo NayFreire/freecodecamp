@@ -59,3 +59,12 @@ class Board:
                 if self.board[row_no][col_no] == num: # If the number in question is already inside the square...
                     return False #... return False, meaning it cannot go there
         return True #If the number is not in the square already, return True, meaning it can go there
+    
+    def is_valid(self, empty, num):
+        row, col = empty
+        valid_in_row = self.valid_in_row(row, num)
+        valid_in_col = self.valid_in_col(col, num)
+        valid_in_square = self.valid_in_square(row, col, num)
+        return all(
+            [valid_in_row, valid_in_col, valid_in_square]
+        )
