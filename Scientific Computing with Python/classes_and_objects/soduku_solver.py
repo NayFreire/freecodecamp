@@ -43,3 +43,9 @@ class Board:
     
     def valid_in_row(self, row, num):
         return num not in self.board[row] #Is this number valid to be put in this row?
+    
+    def valid_in_col(self, col, num):
+        return all(
+            self.board[row][col] != num
+            for row in range(9)
+        ) #Also can be written like all(self.board[row[col] != num for row in range(9))
