@@ -24,7 +24,8 @@ def arithmetic_arranger(problems, show_answers=False):
             if not just_digits_1 or not just_digits_2:
                 raise ValueError("Numbers must only contain digits.")
             
-            
+            if len(problem.split()[0]) > 4 or len(problem.split()[2]) > 4:
+                raise ValueError("Numbers cannot be more than four digits.")
     except ValueError as e:
         print("Error: ", e)
 
