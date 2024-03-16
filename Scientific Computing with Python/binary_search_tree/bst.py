@@ -25,8 +25,8 @@ class BinarySearchTree:
         return self._search(self.root, key)
     
     def _search(self, node, key): 
-        if node is None or node.key == key:
+        if node is None or node.key == key: # if node is None (not present in the tree) or the current node is the one being search, return it
             return node
-        if key < node.key:
-            return self._search(node.left, key)    
-        return self._search(node.right, key)      
+        if key < node.key: # if the key is smaller than the node...
+            return self._search(node.left, key) #... look for it in the left sub-tree   
+        return self._search(node.right, key) # else if the key is greater than the node look for it in the right sub-tree
