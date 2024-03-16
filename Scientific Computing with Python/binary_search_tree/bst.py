@@ -3,6 +3,9 @@ class TreeNode:
         self.key = key
         self.left = None
         self.right = None
+    
+    def __str__(self):
+        return str(self.key)
 
 class BinarySearchTree:
     def __init__(self):
@@ -62,6 +65,17 @@ class BinarySearchTree:
     
     def _inorder_traversal(self, node, result):
         if node: # if node is not empty
-            self._inorder_traversal(node.left, result)
+            self._inorder_traversal(node.left, result) # this recursive call explores the entire left sub-tree in an in-order manner
             result.append(node.key)
-            self._inorder_traversal(node.right, result) # this recursive call explores the entire right subtree in an in-order manner
+            self._inorder_traversal(node.right, result) # this recursive call explores the entire right sub-tree in an in-order manner
+
+bst = BinarySearchTree()
+nodes = [50, 30, 20, 40, 70, 60, 80]
+
+for node in nodes:
+    bst.insert(node)
+print('Inorder traversal: ', bst.inorder_traversal())
+print("Search for 40:", bst.search(40))
+bst.delete(40)
+print("Inorder traversal after deleting 40:", bst.inorder_traversal())
+print("Search for 40:", bst.search(40))
