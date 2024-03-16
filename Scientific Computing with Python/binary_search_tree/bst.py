@@ -50,4 +50,18 @@ class BinarySearchTree:
             node.right = self._delete(node.right, node.key) 
         return node
     
+    def _min_value(self, node):
+        while node.left is not None: # while the nod is not a leaf...
+            node = node.left #... keep going down
+        return node.key
     
+    def inorder_traversal(self):
+        result = [] # will store the keys of the nodes in sorted order
+        self._inorder_traversal(self.root, result)
+        return result
+    
+    def _inorder_traversal(self, node, result):
+        if node: # if node is not empty
+            self._inorder_traversal(node.left, result)
+            result.append(node.key)
+            self._inorder_traversal(node.right, result) # this recursive call explores the entire right subtree in an in-order manner
