@@ -68,3 +68,17 @@ class Board:
         return all(
             [valid_in_row, valid_in_col, valid_in_square]
         )
+    
+    def solver(self):
+        if (next_empty := self.find_empty_cell()) is None: # If there are no more empty cells...
+            return True #... the sudoku has been solved
+        else: #If there are still empty cells...
+            for guess in range(1, 10): #Iterate from 1 to 9 (the second value in range is non-inclusive)
+                if self.is_valid(next_empty, guess): # If a number is valid for this empty cell
+                    row, col = next_empty #get the row and column...
+                    self.board[row][col] = guess #... and assign this guess to the empty cell
+                    
+                    if self.solver(): #If the recursive call returns true...
+                        return True #... the soduko is solved
+                    self.board[row][col] = 0 # #If the recursive call returns false, the guess made the sudoku unsolvable, so the cell needs to go back to 0
+            return False #Means that none of the guesses lead to a solution
