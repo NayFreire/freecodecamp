@@ -30,3 +30,24 @@ class BinarySearchTree:
         if key < node.key: # if the key is smaller than the node...
             return self._search(node.left, key) #... look for it in the left sub-tree   
         return self._search(node.right, key) # else if the key is greater than the node look for it in the right sub-tree
+    
+    def delete(self, key):
+        self.root = self._delete(self.root, key) # assigning a new root to the self.root variable, cause the root can be the key to be deleted, In this case, we need a new root
+        
+    def _delete(self, node, key):
+        if node is None: # if the node was not found, return the node
+            return node
+        if key < node.key: # if current node is smaller than the key...
+            node.left = self._delete(node.left, key) # recursion to the left sub-tree
+        elif key > node.key: # else if current node is greater than the key...
+            node.right = self._delete(node.right, key) # recursion to the right sub-tree
+        else: 
+            if node.left is None: #if there's no child on the left...
+                return node.right #... return the one on the right
+            elif node.right is None: #else if there's no child on the right...
+                return node.left #... return the one on the left
+            node.key = self._min_value(node.right) # getting the minimim key on the right subtree, so this key can take the deleted key's place
+            node.right = self._delete(node.right, node.key) 
+        return node
+    
+    
