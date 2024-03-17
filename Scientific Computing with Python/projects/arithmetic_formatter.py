@@ -15,12 +15,17 @@ def get_vertical(problems):
     second_line = []
     third_line = []
     forth_line = []
+    vertical = ''
 
     for problem in problems:
         operation = 0
-        first_line.append(f'{problem.split()[0]}')
+        # print(f"{problem.split()[0]}{'*' * 4}")
+        with_space = f"{' ' * (6 - len(problem.split()[0]))}{problem.split()[0]}"
+        first_line.append(with_space)
 
-        second_line.append(f'{problem.split()[1]}    {problem.split()[2]}')
+        with_space_and_operator = f"{problem.split()[1]} {' ' * (4 - len(problem.split()[2]))}{problem.split()[2]}"
+        second_line.append(with_space_and_operator)
+
         third_line.append('-----')
 
         if problem.split()[1] == '+':
@@ -28,12 +33,37 @@ def get_vertical(problems):
         else:
             operation = int(problem.split()[0]) - int(problem.split()[2])
         
-        forth_line.append(operation)
+        forth_line.append(str(operation))
+    
+    # print(first_line)
+    # print(second_line)
+    # print(third_line)
+    # print(forth_line)
         
+
+    first_line[len(first_line) - 1] += f'\n'
+    second_line[len(second_line) - 1] += f'\n'
+    third_line[len(third_line) - 1] += f'\n'
+    forth_line[len(forth_line) - 1] += f'\n'
+
+    for i in range(4):
+        vertical += first_line[i]
+    
+    for i in range(4):
+        vertical += second_line[i]
+
+    for i in range(4):
+        vertical += third_line[i]
+
+    for i in range(4):
+        vertical += forth_line[i]
+    
+
     no_result.append(first_line)
     no_result.append(second_line)
     no_result.append(third_line)
     no_result.append(forth_line)
+    print(vertical)
     return no_result
 
 def arithmetic_arranger(problems, show_answers=False):
