@@ -9,7 +9,7 @@ def is_it_just_numbers(number):
             return False
     return True
 
-def get_vertical(problems):
+def get_vertical(problems, show_answers):
     with_space = []
     first_line = []
     second_line = []
@@ -59,7 +59,10 @@ def get_vertical(problems):
         else:
             operation = int(first_operand) - int(second_operand)
 
-        equal_line = f"{' ' * ((len(with_space_and_operator) - len(str(operation))))}{str(operation)}"
+        if show_answers:
+            equal_line = f"{' ' * ((len(with_space_and_operator) - len(str(operation))))}{str(operation)}"
+        else:
+            equal_line = f"{' ' * len(with_space_and_operator)}"
         
         fourth_line.append(equal_line)
 
@@ -123,7 +126,7 @@ def arithmetic_arranger(problems, show_answers=False):
                 raise ValueError("Numbers cannot be more than four digits.")
             
 
-        problems = get_vertical(problems)
+        problems = get_vertical(problems, show_answers)
         # print(problems)
     except ValueError as e:
         print("Error: ", e)
