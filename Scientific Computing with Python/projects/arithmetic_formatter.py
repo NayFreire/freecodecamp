@@ -27,39 +27,39 @@ def get_vertical(problems):
 
         if len(first_operand) > len(second_operand):
             # print('#1', first_operand)
-            with_space = f"{' ' * (len(operator + ' ' + first_operand) - len(first_operand))}{first_operand}|"
+            with_space = f"{' ' * (len(operator + ' ' + first_operand) - len(first_operand))}{first_operand}"
             first_line.append(with_space)
 
-            with_space_and_operator = f"{operator}{' ' * (len(operator + ' ' + first_operand) - len(second_operand) - 1)}{second_operand}|"
+            with_space_and_operator = f"{operator}{' ' * (len(operator + ' ' + first_operand) - len(second_operand) - 1)}{second_operand}"
             second_line.append(with_space_and_operator)
 
-            third_line.append(f"{'-' * len(operator + ' ' + first_operand)}|")
+            third_line.append(f"{'-' * len(operator + ' ' + first_operand)}")
 
         elif len(first_operand) < len(second_operand):
             # print('#2', second_operand)
-            with_space = f"{' ' * (len(operator + ' ' + second_operand) - len(first_operand))}{first_operand}|"
+            with_space = f"{' ' * (len(operator + ' ' + second_operand) - len(first_operand))}{first_operand}"
             first_line.append(with_space)
 
-            with_space_and_operator = f"{operator} {second_operand}|"
+            with_space_and_operator = f"{operator} {second_operand}"
             second_line.append(with_space_and_operator)
 
-            third_line.append(f"{'-' * len(operator + ' ' + second_operand)}|")
+            third_line.append(f"{'-' * len(operator + ' ' + second_operand)}")
         else:
             # print('#3', second_operand)
-            with_space = f"{' ' * (len(operator + ' ' + second_operand) - len(first_operand))}{first_operand}|"
+            with_space = f"{' ' * (len(operator + ' ' + second_operand) - len(first_operand))}{first_operand}"
             first_line.append(with_space)
 
-            with_space_and_operator = f"{operator} {second_operand}|"
+            with_space_and_operator = f"{operator} {second_operand}"
             second_line.append(with_space_and_operator)
 
-            third_line.append(f"{'-' * len(operator + ' ' + second_operand)}|")
+            third_line.append(f"{'-' * len(operator + ' ' + second_operand)}")
 
         if operator == '+':
             operation = int(first_operand) + int(second_operand)
         else:
             operation = int(first_operand) - int(second_operand)
 
-        equal_line = f"{' ' * ((len(with_space_and_operator) - len(str(operation))) -1)}{str(operation)}|"
+        equal_line = f"{' ' * ((len(with_space_and_operator) - len(str(operation))))}{str(operation)}"
         
         fourth_line.append(equal_line)
 
@@ -69,16 +69,28 @@ def get_vertical(problems):
     fourth_line[len(fourth_line) - 1] += f'\n'
 
     for i in range(len(problems)):
-        vertical += first_line[i]
+        vertical += first_line[i]        
+        if i != len(problems) - 1:
+            # print(i, '*')
+            vertical += '    '
     
     for i in range(len(problems)):
-        vertical += second_line[i]
+        vertical += second_line[i]         
+        if i != len(problems) - 1:
+            # print(i, '*')
+            vertical += '    '            
 
     for i in range(len(problems)):
-        vertical += third_line[i]
+        vertical += third_line[i]        
+        if i != len(problems) - 1:
+            # print(i, '*')
+            vertical += '    '
 
     for i in range(len(problems)):
-        vertical += fourth_line[i]
+        vertical += fourth_line[i]           
+        if i != len(problems) - 1:
+            # print(i, '*')
+            vertical += '    '
     
     full_operation.append(first_line)
     full_operation.append(second_line)
