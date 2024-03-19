@@ -10,61 +10,82 @@ def is_it_just_numbers(number):
     return True
 
 def get_vertical(problems):
-    no_result = []
+    with_space = []
     first_line = []
     second_line = []
     third_line = []
-    forth_line = []
+    fourth_line = []
+    full_operation = []
     vertical = ''
 
+    operation = 0
+
     for problem in problems:
-        operation = 0
-        # print(f"{problem.split()[0]}{'*' * 4}")
-        with_space = f"{' ' * (6 - len(problem.split()[0]))}{problem.split()[0]}"
-        first_line.append(with_space)
+        first_operand = problem.split()[0]
+        operator = problem.split()[1]
+        second_operand = problem.split()[2]
 
-        with_space_and_operator = f"{problem.split()[1]} {' ' * (4 - len(problem.split()[2]))}{problem.split()[2]}"
-        second_line.append(with_space_and_operator)
+        if len(first_operand) > len(second_operand):
+            # print('#1', first_operand)
+            with_space = f"{' ' * (len(operator + ' ' + first_operand) - len(first_operand))}{first_operand}|"
+            first_line.append(with_space)
 
-        third_line.append('-----')
+            with_space_and_operator = f"{operator}{' ' * (len(operator + ' ' + first_operand) - len(second_operand) - 1)}{second_operand}|"
+            second_line.append(with_space_and_operator)
 
-        if problem.split()[1] == '+':
-            operation = int(problem.split()[0]) + int(problem.split()[2])
+            third_line.append(f"{'-' * len(operator + ' ' + first_operand)}|")
+
+        elif len(first_operand) < len(second_operand):
+            # print('#2', second_operand)
+            with_space = f"{' ' * (len(operator + ' ' + second_operand) - len(first_operand))}{first_operand}|"
+            first_line.append(with_space)
+
+            with_space_and_operator = f"{operator} {second_operand}|"
+            second_line.append(with_space_and_operator)
+
+            third_line.append(f"{'-' * len(operator + ' ' + second_operand)}|")
         else:
-            operation = int(problem.split()[0]) - int(problem.split()[2])
+            # print('#3', second_operand)
+            with_space = f"{' ' * (len(operator + ' ' + second_operand) - len(first_operand))}{first_operand}|"
+            first_line.append(with_space)
+
+            with_space_and_operator = f"{operator} {second_operand}|"
+            second_line.append(with_space_and_operator)
+
+            third_line.append(f"{'-' * len(operator + ' ' + second_operand)}|")
+
+        if operator == '+':
+            operation = int(first_operand) + int(second_operand)
+        else:
+            operation = int(first_operand) - int(second_operand)
+
+        equal_line = f"{' ' * ((len(with_space_and_operator) - len(str(operation))) -1)}{str(operation)}|"
         
-        forth_line.append(str(operation))
-    
-    # print(first_line)
-    # print(second_line)
-    # print(third_line)
-    # print(forth_line)
-        
+        fourth_line.append(equal_line)
 
     first_line[len(first_line) - 1] += f'\n'
     second_line[len(second_line) - 1] += f'\n'
     third_line[len(third_line) - 1] += f'\n'
-    forth_line[len(forth_line) - 1] += f'\n'
+    fourth_line[len(fourth_line) - 1] += f'\n'
 
-    for i in range(4):
+    for i in range(len(problems)):
         vertical += first_line[i]
     
-    for i in range(4):
+    for i in range(len(problems)):
         vertical += second_line[i]
 
-    for i in range(4):
+    for i in range(len(problems)):
         vertical += third_line[i]
 
-    for i in range(4):
-        vertical += forth_line[i]
+    for i in range(len(problems)):
+        vertical += fourth_line[i]
     
-
-    no_result.append(first_line)
-    no_result.append(second_line)
-    no_result.append(third_line)
-    no_result.append(forth_line)
+    full_operation.append(first_line)
+    full_operation.append(second_line)
+    full_operation.append(third_line)
+    full_operation.append(fourth_line)
     print(vertical)
-    return no_result
+    return full_operation
 
 def arithmetic_arranger(problems, show_answers=False):
     try:
@@ -98,5 +119,5 @@ def arithmetic_arranger(problems, show_answers=False):
 
     return problems
 
-print(f'\n{arithmetic_arranger(["32 + 698", "3801 - 2", "45 + 43", "123 + 49"])}')
+print(f'\n{arithmetic_arranger(["11 + 4", "3801 - 2999", "1 + 2", "123 + 49", "1 - 9380"])}')
 # print(is_it_just_numbers('12.9'))
