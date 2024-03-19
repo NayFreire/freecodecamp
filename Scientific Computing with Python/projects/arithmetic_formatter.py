@@ -15,7 +15,7 @@ def get_vertical(problems, show_answers):
     second_line = []
     third_line = []
     fourth_line = []
-    full_operation = []
+
     vertical = ''
 
     operation = 0
@@ -61,46 +61,40 @@ def get_vertical(problems, show_answers):
 
         if show_answers:
             equal_line = f"{' ' * ((len(with_space_and_operator) - len(str(operation))))}{str(operation)}"
-        else:
-            equal_line = f"{' ' * len(with_space_and_operator)}"
         
-        fourth_line.append(equal_line)
+            fourth_line.append(equal_line)
 
     first_line[len(first_line) - 1] += f'\n'
     second_line[len(second_line) - 1] += f'\n'
     third_line[len(third_line) - 1] += f'\n'
-    fourth_line[len(fourth_line) - 1] += f'\n'
+
+    if show_answers:
+        fourth_line[len(fourth_line) - 1] += f'\n'
 
     for i in range(len(problems)):
         vertical += first_line[i]        
         if i != len(problems) - 1:
-            # print(i, '*')
             vertical += '    '
     
     for i in range(len(problems)):
         vertical += second_line[i]         
         if i != len(problems) - 1:
-            # print(i, '*')
             vertical += '    '            
 
     for i in range(len(problems)):
         vertical += third_line[i]        
         if i != len(problems) - 1:
-            # print(i, '*')
             vertical += '    '
 
-    for i in range(len(problems)):
-        vertical += fourth_line[i]           
-        if i != len(problems) - 1:
-            # print(i, '*')
-            vertical += '    '
+    if show_answers:
+        for i in range(len(problems)):
+            vertical += fourth_line[i]           
+            if i != len(problems) - 1:
+                vertical += '    '
     
-    full_operation.append(first_line)
-    full_operation.append(second_line)
-    full_operation.append(third_line)
-    full_operation.append(fourth_line)
-    print(vertical)
-    return full_operation
+    # print(vertical)
+
+    return vertical
 
 def arithmetic_arranger(problems, show_answers=False):
     try:
@@ -125,14 +119,9 @@ def arithmetic_arranger(problems, show_answers=False):
             if len(problem.split()[0]) > 4 or len(problem.split()[2]) > 4:
                 raise ValueError("Numbers cannot be more than four digits.")
             
-
-        problems = get_vertical(problems, show_answers)
-        # print(problems)
+        return get_vertical(problems, show_answers)
+        
     except ValueError as e:
-        print("Error: ", e)
+        return f"Error: {e}"
 
-
-    return problems
-
-print(f'\n{arithmetic_arranger(["11 + 4", "3801 - 2999", "1 + 2", "123 + 49", "1 - 9380"])}')
-# print(is_it_just_numbers('12.9'))
+print(f'\n{arithmetic_arranger(["98 + 3g5", "3801 - 2", "45 + 43", "123 + 49"])}')
