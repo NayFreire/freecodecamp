@@ -43,11 +43,23 @@ def arithmetic_arranger(problems, show_answer=True):
             string: problems arrenged
     """
     
-    there_are_errors, error_message = has_error(problems)
+    there_are_errors, error_message = has_error(problems) #unpacking returns from function
 
     if not there_are_errors:
-        print(problems)
+        operation = ''
+        for problem in problems:
+            operant_1, operator, operant_2 = problem.split()
+
+            operation += f"{operant_1 + '   '}"
+
+        operation += '\n'
+        
+        for problem in problems:
+            operant_1, operator, operant_2 = problem.split()
+
+            operation += f"{operator + ' ' + operant_2 + '   '}"
+        print(operation)
     else:
         return error_message
 
-print(arithmetic_arranger(["98 + 3g5", "3801 - 2", "45 + 43", "123 + 49"], True))
+print(arithmetic_arranger(["98 + 35", "3801 - 2", "45 + 43", "123 + 49"], True))
