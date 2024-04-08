@@ -22,7 +22,7 @@ def has_error(problems):
 
         #3) Each number (operand) should only contain digits. Otherwise, the function will return: #!'Error: Numbers must only contain digits.'
 
-        if not operand_1.isdigit() and not operand_2.isdigit():
+        if not operand_1.isdigit() or not operand_2.isdigit():
             return True, 'Error: Numbers must only contain digits.'
 
         #4) Each operand (aka number on each side of the operator) has a max of four digits in width. Otherwise, the error string returned will be: #!'Error: Numbers cannot be more than four digits.'
@@ -50,4 +50,4 @@ def arithmetic_arranger(problems, show_answer=True):
     else:
         return error_message
 
-print(arithmetic_arranger(["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"], True))
+print(arithmetic_arranger(["98 + 3g5", "3801 - 2", "45 + 43", "123 + 49"], True))
