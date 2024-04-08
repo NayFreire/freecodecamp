@@ -32,7 +32,10 @@ def arithmetic_arranger(problems, show_answer=True):
 
         #3) Each number (operand) should only contain digits. Otherwise, the function will return: #!'Error: Numbers must only contain digits.'
 
-    #4) Each operand (aka number on each side of the operator) has a max of four digits in width. Otherwise, the error string returned will be: #!'Error: Numbers cannot be more than four digits.'
+        if not operand_1.isdigit() and not operand_2.isdigit():
+            return 'Error: Numbers must only contain digits.'
+
+        #4) Each operand (aka number on each side of the operator) has a max of four digits in width. Otherwise, the error string returned will be: #!'Error: Numbers cannot be more than four digits.'
     
 
 
