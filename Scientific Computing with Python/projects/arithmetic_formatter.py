@@ -43,9 +43,11 @@ def arithmetic_arranger(problems, show_answer=True):
             string: problems arrenged
     """
     
-    if not has_error(problems)[0]:
+    there_are_errors, error_message = has_error(problems)
+
+    if not there_are_errors:
         print(problems)
     else:
-        return has_error(problems)[1]
+        return error_message
 
-print(arithmetic_arranger(["32 + 8", "1 - 38022221", "9999 + 9999", "523 - 49"], True))
+print(arithmetic_arranger(["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"], True))
