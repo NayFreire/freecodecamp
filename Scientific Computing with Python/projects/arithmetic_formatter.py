@@ -4,6 +4,7 @@ Finish the arithmetic_arranger function that receives a list of strings which ar
 """
 
 MAX_PROBLEMS = 5
+MAX_DIGITS = 4
 
 def arithmetic_arranger(problems, show_answer=True):
     """
@@ -36,7 +37,10 @@ def arithmetic_arranger(problems, show_answer=True):
             return 'Error: Numbers must only contain digits.'
 
         #4) Each operand (aka number on each side of the operator) has a max of four digits in width. Otherwise, the error string returned will be: #!'Error: Numbers cannot be more than four digits.'
-    
 
+        if len(operand_1) > MAX_DIGITS or len(operand_2) > MAX_DIGITS:
+            return 'Error: Numbers cannot be more than four digits.'
+    
+    return 'ok'
 
 print(arithmetic_arranger(["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"], True))
