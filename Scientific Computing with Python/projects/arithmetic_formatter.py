@@ -6,6 +6,31 @@ Finish the arithmetic_arranger function that receives a list of strings which ar
 MAX_PROBLEMS = 5
 MAX_DIGITS = 4
 
+def has_error(problems):
+    #1) If there are too many problems supplied to the function. The limit is five, anything more will return: #!'Error: Too many problems.'
+    
+    if len(problems)> MAX_PROBLEMS:
+        return True, "Error: Too many problems."
+    
+    for problem in problems:
+        operand_1, operator, operand_2 = problem.split()
+    
+        #2) The appropriate operators the function will accept are addition and subtraction. Multiplication and division will return an error. Other operators not mentioned in this bullet point will not need to be tested. The error returned will be: #!"Error: Operator must be '+' or '-'."
+
+        if operator not in ['+', '-']:
+            return True, "Error: Operator must be '+' or '-'."
+
+        #3) Each number (operand) should only contain digits. Otherwise, the function will return: #!'Error: Numbers must only contain digits.'
+
+        if not operand_1.isdigit() and not operand_2.isdigit():
+            return True, 'Error: Numbers must only contain digits.'
+
+        #4) Each operand (aka number on each side of the operator) has a max of four digits in width. Otherwise, the error string returned will be: #!'Error: Numbers cannot be more than four digits.'
+
+        if len(operand_1) > MAX_DIGITS or len(operand_2) > MAX_DIGITS:
+            return True, 'Error: Numbers cannot be more than four digits.'
+    return False, 'Ok'
+
 def arithmetic_arranger(problems, show_answer=True):
     """
         Returns the problem arrenged.
@@ -17,30 +42,10 @@ def arithmetic_arranger(problems, show_answer=True):
         Returns:
             string: problems arrenged
     """
-
-    #1) If there are too many problems supplied to the function. The limit is five, anything more will return: #!'Error: Too many problems.'
     
-    if len(problems)> MAX_PROBLEMS:
-        return "Error: Too many problems."
-    
-    for problem in problems:
-        operand_1, operator, operand_2 = problem.split()
-    
-        #2) The appropriate operators the function will accept are addition and subtraction. Multiplication and division will return an error. Other operators not mentioned in this bullet point will not need to be tested. The error returned will be: #!"Error: Operator must be '+' or '-'."
+    if not has_error(problems)[0]:
+        print(problems)
+    else:
+        return has_error(problems)[1]
 
-        if operator not in ['+', '-']:
-            return "Error: Operator must be '+' or '-'."
-
-        #3) Each number (operand) should only contain digits. Otherwise, the function will return: #!'Error: Numbers must only contain digits.'
-
-        if not operand_1.isdigit() and not operand_2.isdigit():
-            return 'Error: Numbers must only contain digits.'
-
-        #4) Each operand (aka number on each side of the operator) has a max of four digits in width. Otherwise, the error string returned will be: #!'Error: Numbers cannot be more than four digits.'
-
-        if len(operand_1) > MAX_DIGITS or len(operand_2) > MAX_DIGITS:
-            return 'Error: Numbers cannot be more than four digits.'
-    
-    return 'ok'
-
-print(arithmetic_arranger(["32 + 8", "1 - 3801", "9999 + 9999", "523 - 49"], True))
+print(arithmetic_arranger(["32 + 8", "1 - 38022221", "9999 + 9999", "523 - 49"], True))
