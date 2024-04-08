@@ -22,9 +22,15 @@ def arithmetic_arranger(problems, show_answer=True):
     if len(problems)> MAX_PROBLEMS:
         return "Error: Too many problems."
     
-    #2) The appropriate operators the function will accept are addition and subtraction. Multiplication and division will return an error. Other operators not mentioned in this bullet point will not need to be tested. The error returned will be: #!"Error: Operator must be '+' or '-'."
+    for problem in problems:
+        operand_1, operator, operand_2 = problem.split()
+    
+        #2) The appropriate operators the function will accept are addition and subtraction. Multiplication and division will return an error. Other operators not mentioned in this bullet point will not need to be tested. The error returned will be: #!"Error: Operator must be '+' or '-'."
 
-    #3) Each number (operand) should only contain digits. Otherwise, the function will return: #!'Error: Numbers must only contain digits.'
+        if operator not in ['+', '-']:
+            return "Error: Operator must be '+' or '-'."
+
+        #3) Each number (operand) should only contain digits. Otherwise, the function will return: #!'Error: Numbers must only contain digits.'
 
     #4) Each operand (aka number on each side of the operator) has a max of four digits in width. Otherwise, the error string returned will be: #!'Error: Numbers cannot be more than four digits.'
     
