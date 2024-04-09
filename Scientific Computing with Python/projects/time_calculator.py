@@ -21,10 +21,25 @@ def add_time(start, duration, day=None):
     start_hour, start_minute = start_time.split(':')
 
     duration_hour, duration_minute = duration.split(':')
+    
+    new_hour = int(start_hour) + int(duration_hour)
+    new_minute = int(start_minute) + int(duration_minute)
+
+    if new_minute > 59:
+        new_hour = new_hour + (int(new_minute/60))
+        while new_minute > 59:
+            new_minute = new_minute - 60
+
+    if new_hour > 12:
+        new_hour = new_hour - 12
+    
+    if new_minute < 10:
+        new_minute = f"0{new_minute}"
+
     if day:
-        return f"{int(start_hour) + int(duration_hour)}:{int(start_minute) + int(duration_minute)}{' '+start_period}, {day}"
+        return f"{new_hour}:{new_minute}{' ' + start_period}, {day}"
     else:
-        return f"{int(start_hour) + int(duration_hour)}:{int(start_minute) + int(duration_minute)}{' '+start_period}"
+        return f"{new_hour}:{new_minute}{' ' + start_period}"
 
 print(add_time('3:00 PM', '3:10'))
 # Returns: 6:10 PM
