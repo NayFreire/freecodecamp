@@ -21,7 +21,7 @@ def get_individual_numbers(start, duration):
     return start_period, start_hour, start_minute, duration_hour, duration_minute
 
 def add_time(start, duration, day=None):
-
+    next_day = False
     days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
     # Unpacking individual numbers
@@ -37,11 +37,16 @@ def add_time(start, duration, day=None):
         while new_minute > 59:
             new_minute = new_minute - 60
 
+    if new_hour > 24:
+        new_hour = new_hour - 24
+        next_day = True
+
     if new_hour >= 12:
         if start_period == 'AM':
             start_period = 'PM'
         else:
             start_period = 'AM'
+            next_day = True
 
     # Verifying and correcting if new_hour is over 12
     if new_hour > 12:
@@ -51,16 +56,21 @@ def add_time(start, duration, day=None):
     if new_minute < 10:
         new_minute = f"0{new_minute}"
 
-    if day:
-        return f"{new_hour}:{new_minute}{' ' + start_period}, {day}"
-    else:
-        return f"{new_hour}:{new_minute}{' ' + start_period}"
+    string_return = f"{new_hour}:{new_minute}{' ' + start_period}"
 
-print(add_time('3:00 PM', '3:10'))
+    if next_day:
+        string_return += ' (next day)'
+
+    if day:
+        return f"{string_return}, {day}"
+    else:
+        return string_return
+
+# print(add_time('3:00 PM', '3:10'))
 # Returns: 6:10 PM
 
-print(add_time('11:30 PM', '2:32', 'Monday'))
-# Returns: 2:02 AM, Monday (next day)
+print(add_time('2:59 AM', '24:00'))
+# Returns: 2:02 AM, Monday
 
-print(add_time('11:43 AM', '00:20'))
+# print(add_time('11:43 AM', '00:20'))
 # Returns: 12:03 PM
