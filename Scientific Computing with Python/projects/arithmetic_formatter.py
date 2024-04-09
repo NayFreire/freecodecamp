@@ -71,13 +71,16 @@ def number_of_dashes_per_operation(operand_1, operator, operand_2, index, list_s
         return f"{(len(operand_2_with_space(operand_1, operator, operand_2, index, list_size))) * '-'}"
 
 def result_with_spaces(operand_1, operator, operand_2, index, list_size):
-    num_of_dashes = len(number_of_dashes_per_operation(operand_1, operator, operand_2, index, list_size)) - NUM_SPACES
-    num_of_spaces = num_of_dashes - len(str(result_operation(operand_1, operator, operand_2)))
-
     if index != list_size - 1:
+        num_of_dashes = len(number_of_dashes_per_operation(operand_1, operator, operand_2, index, list_size)) - NUM_SPACES
+        num_of_spaces = num_of_dashes - len(str(result_operation(operand_1, operator, operand_2)))
+
         return f"{' ' * num_of_spaces}{result_operation(operand_1, operator, operand_2)}{' ' * NUM_SPACES}"
     else:
-        return f"{' ' * num_of_spaces}{result_operation(operand_1, operator, operand_2)}{' ' * NUM_SPACES}"
+        num_of_dashes = len(number_of_dashes_per_operation(operand_1, operator, operand_2, index, list_size))
+        num_of_spaces = num_of_dashes - len(str(result_operation(operand_1, operator, operand_2)))
+
+        return f"{' ' * num_of_spaces}{result_operation(operand_1, operator, operand_2)}"
 
 def arithmetic_arranger(problems, show_answer=False):
     """
@@ -127,5 +130,5 @@ def arithmetic_arranger(problems, show_answer=False):
     else:
         return error_message
 
-print(arithmetic_arranger(["1 + 2", "1 - 9380"]))
-print(len(arithmetic_arranger(["1 + 2", "1 - 9380"])))
+print(arithmetic_arranger(["3 + 855", "988 + 40"], True))
+print(len(arithmetic_arranger(["3 + 855", "988 + 40"], True)))
