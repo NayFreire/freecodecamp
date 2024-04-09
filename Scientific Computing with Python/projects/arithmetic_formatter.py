@@ -38,27 +38,38 @@ def result_operation(operand_1, operator, operand_2):
     else:
         return int(operand_1) - int(operand_2)
     
-def operand_1_with_space(operand_1, operator, operand_2):
+def operand_1_with_space(operand_1, operator, operand_2, index, list_size):
     operand_2_and_operator_size = len(f"{operator + ' ' + operand_2}")
     operand_with_space = f"{' ' * (operand_2_and_operator_size - len(operand_1))}{operand_1}"
 
-    return operand_with_space + '    '
+    if index != list_size - 1:
+        return f"{operand_with_space}{' ' * NUM_SPACES}"
+    else:
+        return f"{operand_with_space}"
 
-def operand_2_with_space(operand_1, operator, operand_2):
+def operand_2_with_space(operand_1, operator, operand_2, index, list_size):
     operand_2_and_operator_size = len(f"{operator + ' ' + operand_2}")
     operand_with_space = f"{' ' * (len(operand_1) - operand_2_and_operator_size)}{operator + ' ' + operand_2}"
 
-    return operand_with_space + '    '
+    if index != list_size - 1:
+        return f"{operand_with_space}{' ' * NUM_SPACES}"
+    else:
+        return f"{operand_with_space}"
 
-def number_of_dashes_per_operation(operand_1, operator, operand_2):
-    return f"{(len(operand_2_with_space(operand_1, operator, operand_2)) - NUM_SPACES) * '-'}{' ' * NUM_SPACES}"
-    
+def number_of_dashes_per_operation(operand_1, operator, operand_2, index, list_size):
+    if index != list_size - 1:
+        return f"{(len(operand_2_with_space(operand_1, operator, operand_2, index, list_size)) - NUM_SPACES) * '-'}{' ' * NUM_SPACES}"
+    else:
+        return f"{(len(operand_2_with_space(operand_1, operator, operand_2, index, list_size))) * '-'}"
 
-def result_with_spaces(operand_1, operator, operand_2):
-    num_of_dashes = len(number_of_dashes_per_operation(operand_1, operator, operand_2)) - NUM_SPACES
+def result_with_spaces(operand_1, operator, operand_2, index, list_size):
+    num_of_dashes = len(number_of_dashes_per_operation(operand_1, operator, operand_2, index, list_size)) - NUM_SPACES
     num_of_spaces = num_of_dashes - len(str(result_operation(operand_1, operator, operand_2)))
 
-    return f"{' ' * num_of_spaces}{result_operation(operand_1, operator, operand_2)}{' ' * NUM_SPACES}"
+    if index != list_size - 1:
+        return f"{' ' * num_of_spaces}{result_operation(operand_1, operator, operand_2)}{' ' * NUM_SPACES}"
+    else:
+        return f"{' ' * num_of_spaces}{result_operation(operand_1, operator, operand_2)}{' ' * NUM_SPACES}"
 
 def arithmetic_arranger(problems, show_answer=False):
     """
@@ -77,36 +88,36 @@ def arithmetic_arranger(problems, show_answer=False):
     if not there_are_errors:
         operation = ''
 
-        for problem in problems:
+        for index, problem in enumerate(problems):
             operand_1, operator, operand_2 = problem.split()
 
-            operation += operand_1_with_space(operand_1, operator, operand_2)
+            operation += operand_1_with_space(operand_1, operator, operand_2, index, len(problems))
 
         operation += '\n'
         
-        for problem in problems:
+        for index, problem in enumerate(problems):
             operand_1, operator, operand_2 = problem.split()
 
-            operation += operand_2_with_space(operand_1, operator, operand_2)
+            operation += operand_2_with_space(operand_1, operator, operand_2, index, len(problems))
 
         operation += '\n'
 
-        for problem in problems:
+        for index, problem in enumerate(problems):
             operand_1, operator, operand_2 = problem.split()
 
-            operation += number_of_dashes_per_operation(operand_1, operator, operand_2)
+            operation += number_of_dashes_per_operation(operand_1, operator, operand_2, index, len(problems))
         
         if show_answer:
             operation += '\n'
 
-            for problem in problems:
+            for index, problem in enumerate(problems):
                 operand_1, operator, operand_2 = problem.split()
 
-                operation += result_with_spaces(operand_1, operator, operand_2)
+                operation += result_with_spaces(operand_1, operator, operand_2, index, len(problems))
 
         return operation
     else:
         return error_message
 
-print(arithmetic_arranger(["1 + 2", "1 - 9380"]))
-print(len(arithmetic_arranger(["1 + 2", "1 - 9380"])))
+print(arithmetic_arranger(["3801 - 2", "123 + 49"]))
+print(len(arithmetic_arranger(["3801 - 2", "123 + 49"])))
