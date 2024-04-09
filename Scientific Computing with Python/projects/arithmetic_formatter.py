@@ -54,7 +54,7 @@ def number_of_dashes_per_operation(operand_1, operator, operand_2):
     return f"{(len(operand_2_with_space(operand_1, operator, operand_2)) - NUM_SPACES) * '-'}{' ' * NUM_SPACES}"
     
 
-def arithmetic_arranger(problems, show_answer=True):
+def arithmetic_arranger(problems, show_answer=False):
     """
         Returns the problem arrenged.
 
@@ -90,14 +90,16 @@ def arithmetic_arranger(problems, show_answer=True):
 
             operation += number_of_dashes_per_operation(operand_1, operator, operand_2)
         
-        operation += '\n'
+        if show_answer:
+            operation += '\n'
 
-        for problem in problems:
-            operand_1, operator, operand_2 = problem.split()
+            for problem in problems:
+                operand_1, operator, operand_2 = problem.split()
 
-            operation += f"{str(result_operation(operand_1, operator, operand_2)) + ' '}"
-        print(operation)
+                operation += f"{str(result_operation(operand_1, operator, operand_2)) + ' '}"
+
+        return operation
     else:
         return error_message
 
-print(arithmetic_arranger(["98 + 35", "3801 - 2", "45 + 43", "123 + 49"], True))
+print(arithmetic_arranger(["98 + 35", "3801 - 2", "45 + 43", "123 + 49"]))
