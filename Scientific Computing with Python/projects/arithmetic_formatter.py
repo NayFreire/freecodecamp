@@ -36,6 +36,9 @@ def result_operation(operand_1, operator, operand_2):
         return int(operand_1) + int(operand_2)
     else:
         return int(operand_1) - int(operand_2)
+    
+def operand_with_space(operand_1, operator, operand_2):
+    f"{operand_1 + '   '}"
 
 def arithmetic_arranger(problems, show_answer=True):
     """
@@ -55,23 +58,23 @@ def arithmetic_arranger(problems, show_answer=True):
         operation = ''
 
         for problem in problems:
-            operant_1, operator, operant_2 = problem.split()
+            operand_1, operator, operand_2 = problem.split()
 
-            operation += f"{operant_1 + '   '}"
+            operation += f"{operand_1 + '   '}"
 
         operation += '\n'
         
         for problem in problems:
-            operant_1, operator, operant_2 = problem.split()
+            operand_1, operator, operand_2 = problem.split()
 
-            operation += f"{operator + ' ' + operant_2 + '   '}"
+            operation += f"{operator + ' ' + operand_2 + '   '}"
 
         operation += '\n'
 
         for problem in problems:
-            operant_1, operator, operant_2 = problem.split()
+            operand_1, operator, operand_2 = problem.split()
 
-            operation += f"{str(result_operation(operant_1, operator, operant_2)) + ' '}"
+            operation += f"{str(result_operation(operand_1, operator, operand_2)) + ' '}"
         print(operation)
     else:
         return error_message
