@@ -13,14 +13,19 @@ If the function is given the optional starting day of the week parameter, then t
 Do not import any Python libraries. Assume that the start times are valid times. The minutes in the duration time will be a whole number less than 60, but the hour can be any whole number.
 """
 
+def get_individual_numbers(start, duration):
+    start_time, start_period = start.split()
+    start_hour, start_minute = start_time.split(':')
+    duration_hour, duration_minute = duration.split(':')
+
+    return start_period, start_hour, start_minute, duration_hour, duration_minute
+
 def add_time(start, duration, day=None):
 
     days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
-    # Splitting and unpacking variables
-    start_time, start_period = start.split()
-    start_hour, start_minute = start_time.split(':')
-    duration_hour, duration_minute = duration.split(':')
+    # Unpacking individual numbers
+    start_period, start_hour, start_minute, duration_hour, duration_minute = get_individual_numbers(start, duration)
     
     # Getting new hour and new minute
     new_hour = int(start_hour) + int(duration_hour)
@@ -41,7 +46,6 @@ def add_time(start, duration, day=None):
     # Verifying and correcting if new_hour is over 12
     if new_hour > 12:
         new_hour = new_hour - 12
-        start_period = 'PM'
     
     # Verifying and correcting if new_minute is under 10
     if new_minute < 10:
@@ -55,8 +59,8 @@ def add_time(start, duration, day=None):
 print(add_time('3:00 PM', '3:10'))
 # Returns: 6:10 PM
 
-print(add_time('11:30 AM', '2:32', 'Monday'))
-# Returns: 2:02 PM, Monday
+print(add_time('11:30 PM', '2:32', 'Monday'))
+# Returns: 2:02 AM, Monday (next day)
 
 print(add_time('11:43 AM', '00:20'))
 # Returns: 12:03 PM
