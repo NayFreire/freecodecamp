@@ -22,6 +22,7 @@ def get_individual_numbers(start, duration):
 
 def add_time(start, duration, day=None):
     next_day = False
+    added_days = 0
     days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
     # Unpacking individual numbers
@@ -38,8 +39,11 @@ def add_time(start, duration, day=None):
             new_minute = new_minute - 60
 
     if new_hour > 24:
-        new_hour = new_hour - 24
-        next_day = True
+        while new_hour > 24:
+            new_hour = new_hour - 24
+            added_days += 1
+        if added_days == 1:
+            next_day = True
 
     if new_hour >= 12:
         if start_period == 'AM':
@@ -60,6 +64,9 @@ def add_time(start, duration, day=None):
 
     if next_day:
         string_return += ' (next day)'
+    
+    if added_days > 1:
+        string_return += f"({added_days} days later)"
 
     if day:
         return f"{string_return}, {day}"
@@ -69,7 +76,7 @@ def add_time(start, duration, day=None):
 # print(add_time('3:00 PM', '3:10'))
 # Returns: 6:10 PM
 
-print(add_time('2:59 AM', '24:00'))
+print(add_time('2:59 AM', '2:00'))
 # Returns: 2:02 AM, Monday
 
 # print(add_time('11:43 AM', '00:20'))
