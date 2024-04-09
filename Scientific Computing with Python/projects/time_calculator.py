@@ -17,22 +17,27 @@ def add_time(start, duration, day=None):
 
     days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
+    # Splitting and unpacking variables
     start_time, start_period = start.split()
     start_hour, start_minute = start_time.split(':')
-
     duration_hour, duration_minute = duration.split(':')
     
+    # Getting new hour and new minute
     new_hour = int(start_hour) + int(duration_hour)
     new_minute = int(start_minute) + int(duration_minute)
 
+    # Verifying and correcting if new_minute is over 59
     if new_minute > 59:
         new_hour = new_hour + (int(new_minute/60))
         while new_minute > 59:
             new_minute = new_minute - 60
 
+    # Verifying and correcting if new_hour is over 12
     if new_hour > 12:
         new_hour = new_hour - 12
+        start_period = 'PM'
     
+    # Verifying and correcting if new_minute is under 10
     if new_minute < 10:
         new_minute = f"0{new_minute}"
 
@@ -41,7 +46,7 @@ def add_time(start, duration, day=None):
     else:
         return f"{new_hour}:{new_minute}{' ' + start_period}"
 
-print(add_time('3:00 PM', '3:10'))
+print(add_time('3:00 PM', '12:00'))
 # Returns: 6:10 PM
 
 print(add_time('11:30 AM', '2:32', 'Monday'))
