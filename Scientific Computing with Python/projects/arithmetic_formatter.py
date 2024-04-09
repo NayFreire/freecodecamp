@@ -5,6 +5,7 @@ Finish the arithmetic_arranger function that receives a list of strings which ar
 
 MAX_PROBLEMS = 5
 MAX_DIGITS = 4
+NUM_SPACES = 4
 
 def has_error(problems):
     #1) If there are too many problems supplied to the function. The limit is five, anything more will return: #!'Error: Too many problems.'
@@ -49,6 +50,10 @@ def operand_2_with_space(operand_1, operator, operand_2):
 
     return operand_with_space + '    '
 
+def number_of_dashes_per_operation(operand_1, operator, operand_2):
+    return f"{(len(operand_2_with_space(operand_1, operator, operand_2)) - NUM_SPACES) * '-'}{' ' * NUM_SPACES}"
+    
+
 def arithmetic_arranger(problems, show_answer=True):
     """
         Returns the problem arrenged.
@@ -78,6 +83,13 @@ def arithmetic_arranger(problems, show_answer=True):
 
             operation += operand_2_with_space(operand_1, operator, operand_2)
 
+        operation += '\n'
+
+        for problem in problems:
+            operand_1, operator, operand_2 = problem.split()
+
+            operation += number_of_dashes_per_operation(operand_1, operator, operand_2)
+        
         operation += '\n'
 
         for problem in problems:
