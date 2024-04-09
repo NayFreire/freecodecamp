@@ -12,6 +12,16 @@ If the function is given the optional starting day of the week parameter, then t
 
 Do not import any Python libraries. Assume that the start times are valid times. The minutes in the duration time will be a whole number less than 60, but the hour can be any whole number.
 """
+def round_up(num, duration_min, start_min):
+    integer = int(num)
+    
+    if duration_min + start_min > 60:
+        return True
+    
+    if num > integer:
+        return True
+    else:
+        return False
 
 def get_individual_numbers(start, duration):
     start_time, start_period = start.split()
@@ -23,7 +33,7 @@ def get_individual_numbers(start, duration):
 def add_time(start, duration, day=None):
     next_day = False
     added_days = 0
-    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
 
     # Unpacking individual numbers
     start_period, start_hour, start_minute, duration_hour, duration_minute = get_individual_numbers(start, duration)
@@ -31,53 +41,61 @@ def add_time(start, duration, day=None):
     # Getting new hour and new minute
     new_hour = int(start_hour) + int(duration_hour)
     new_minute = int(start_minute) + int(duration_minute)
-
-    # Verifying and correcting if new_minute is over 59
+    
     if new_minute > 59:
-        new_hour = new_hour + (int(new_minute/60))
         while new_minute > 59:
             new_minute = new_minute - 60
-
+            new_hour = new_hour + 1
+    
     if new_hour > 24:
+        need_to_round_up = round_up(int(duration_hour)/24, int(duration_minute), int(start_minute))
+        
         while new_hour > 24:
             new_hour = new_hour - 24
             added_days += 1
-        if added_days == 1:
-            next_day = True
-
-    if new_hour >= 12:
-        if start_period == 'AM':
-            start_period = 'PM'
-        else:
-            start_period = 'AM'
-            next_day = True
-
-    # Verifying and correcting if new_hour is over 12
-    if new_hour > 12:
-        new_hour = new_hour - 12
+            
+        if need_to_round_up:
+            added_days += 1
     
-    # Verifying and correcting if new_minute is under 10
+    if new_hour > 12 and start_period == 'PM':
+        new_hour = new_hour - 12
+        start_period = 'AM'
+    elif new_hour > 12 and start_period == 'AM':
+        new_hour = new_hour - 12
+        start_period = 'PM'
+    elif new_hour == 12 and start_period == 'AM':
+        start_period = 'PM'
+    elif new_hour == 12 and start_period == 'PM':
+        start_period = 'AM'
+        
     if new_minute < 10:
         new_minute = f"0{new_minute}"
 
     string_return = f"{new_hour}:{new_minute}{' ' + start_period}"
 
-    if next_day:
+    if added_days == 1:
         string_return += ' (next day)'
     
     if added_days > 1:
-        string_return += f"({added_days} days later)"
+        string_return += f" ({added_days} days later)"
 
     if day:
         return f"{string_return}, {day}"
     else:
         return string_return
 
-# print(add_time('3:00 PM', '3:10'))
-# Returns: 6:10 PM
+# print(add_time('3:00 PM', '3:10'))  # Output: 6:10 PM
+# print(add_time('11:30 AM', '2:32', 'Monday'))  # Output: 2:02 PM, Monday
+# print(add_time('11:43 AM', '00:20'))  # Output: 12:03 PM
+# print(add_time('10:10 PM', '3:30'))  # Output: 1:40 AM (next day)
+# print(add_time('11:43 PM', '24:20', 'tueSday'))  # Output: 12:03 AM, Thursday (2 days later)
+# print(add_time('6:30 PM', '205:12'))  # Output: 7:42 AM (9 days later)
 
-print(add_time('2:59 AM', '2:00'))
-# Returns: 2:02 AM, Monday
+# print(add_time('2:59 AM', '24:00'))
+# Returns: 2:59 AM (next day)
 
-# print(add_time('11:43 AM', '00:20'))
-# Returns: 12:03 PM
+# print(add_time('8:16 PM', '466:02', 'tuesday'))
+# Returns: '6:18 AM, Monday (20 days later)'
+
+print(add_time('11:55 AM', '3:12'))
+# Returns: '3:07 PM'
