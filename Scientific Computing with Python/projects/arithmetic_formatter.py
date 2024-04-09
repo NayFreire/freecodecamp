@@ -39,8 +39,13 @@ def result_operation(operand_1, operator, operand_2):
         return int(operand_1) - int(operand_2)
     
 def operand_1_with_space(operand_1, operator, operand_2, index, list_size):
-    operand_2_and_operator_size = len(f"{operator + ' ' + operand_2}")
-    operand_with_space = f"{' ' * (operand_2_and_operator_size - len(operand_1))}{operand_1}"
+    operand_with_space = ''
+    
+    if len(operand_1) >= len(operand_2):
+        operand_with_space = f"{'  ' + operand_1}"
+    else:
+        operand_2_and_operator_size = len(f"{operator + ' ' + operand_2}")
+        operand_with_space = f"{' '}{' ' * (operand_2_and_operator_size - len(operand_1) - 1)}{operand_1}"
 
     if index != list_size - 1:
         return f"{operand_with_space}{' ' * NUM_SPACES}"
@@ -48,9 +53,12 @@ def operand_1_with_space(operand_1, operator, operand_2, index, list_size):
         return f"{operand_with_space}"
 
 def operand_2_with_space(operand_1, operator, operand_2, index, list_size):
-    operand_2_and_operator_size = len(f"{operator + ' ' + operand_2}")
-    operand_with_space = f"{' ' * (len(operand_1) - operand_2_and_operator_size)}{operator + ' ' + operand_2}"
-
+    operand_with_space = ''
+    if len(operand_1) >= len(operand_2):
+        operand_2_and_operator_size = len(operand_2)
+        operand_with_space = f"{operator + ' '}{' ' * (len(operand_1) - operand_2_and_operator_size)}{operand_2}"
+    else:
+        operand_with_space = f"{operator + ' ' + operand_2}"
     if index != list_size - 1:
         return f"{operand_with_space}{' ' * NUM_SPACES}"
     else:
@@ -119,5 +127,5 @@ def arithmetic_arranger(problems, show_answer=False):
     else:
         return error_message
 
-print(arithmetic_arranger(["3801 - 2", "123 + 49"]))
-print(len(arithmetic_arranger(["3801 - 2", "123 + 49"])))
+print(arithmetic_arranger(["1 + 2", "1 - 9380"]))
+print(len(arithmetic_arranger(["1 + 2", "1 - 9380"])))
