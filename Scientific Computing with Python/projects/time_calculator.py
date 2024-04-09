@@ -32,6 +32,12 @@ def add_time(start, duration, day=None):
         while new_minute > 59:
             new_minute = new_minute - 60
 
+    if new_hour >= 12:
+        if start_period == 'AM':
+            start_period = 'PM'
+        else:
+            start_period = 'AM'
+
     # Verifying and correcting if new_hour is over 12
     if new_hour > 12:
         new_hour = new_hour - 12
@@ -46,8 +52,11 @@ def add_time(start, duration, day=None):
     else:
         return f"{new_hour}:{new_minute}{' ' + start_period}"
 
-print(add_time('3:00 PM', '12:00'))
+print(add_time('3:00 PM', '3:10'))
 # Returns: 6:10 PM
 
 print(add_time('11:30 AM', '2:32', 'Monday'))
 # Returns: 2:02 PM, Monday
+
+print(add_time('11:43 AM', '00:20'))
+# Returns: 12:03 PM
