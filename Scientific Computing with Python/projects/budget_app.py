@@ -27,12 +27,19 @@ class Category:
 
             return True
         return False
+    
+    """
+    3 - A get_balance method that returns the current balance of the budget category based on the deposits and withdrawals that have occurred.
+    """
 
+    def get_balence(self):
+        return sum(ledge['amount'] for ledge in self.ledger)
 
 food_cat = Category("Food")
 food_cat.deposit(100, 'cheese')
 food_cat.deposit(30, 'rice')
 print(food_cat.withdraw(15, 'acai'))
+print(food_cat.get_balence())
 
 print(food_cat.ledger)
 
