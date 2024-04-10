@@ -2,11 +2,20 @@
 Complete the Category class. It should be able to instantiate objects based on different budget categories like food, clothing, and entertainment. When objects are created, they are passed in the name of the category. The class should have an instance variable called ledger that is a list.
 """
 NUM_OF_ASTERISKS = 30
+NUM_OF_DIGITS = 7
 
 class Category:
     def __init__(self, category):
         self.category = category
         self.ledger = []
+
+    """
+    When the budget object is printed it should display:
+
+    - A title line of 30 characters where the name of the category is centered in a line of * characters.
+    - A list of the items in the ledger. Each line should show the description and amount. The first 23 characters of the description should be displayed, then the amount. The amount should be right aligned, contain two decimal places, and display a maximum of 7 characters.
+    - A line displaying the category total.
+    """
 
     def __str__(self):
         display = ''
@@ -17,14 +26,17 @@ class Category:
         display += title + '\n'
 
         for ledge in self.ledger:
-            ledge_dict = f"{ledge['description']}{ledge['amount']}"
+            ledge_dict = f"{ledge['description']}{str(round(ledge['amount'], 2))[:NUM_OF_DIGITS-1]}"
             if len(ledge_dict) > len(title):
                 new_size = len(title) - len(str(ledge['amount']))
-                display += f"{ledge['description'][:new_size-1]}{' '}{ledge['amount']}"
+                display += f"{ledge['description'][:new_size-1]}{' '}{str(round(ledge['amount'], 2))[:NUM_OF_DIGITS-1]}"
             else:
-                display += f"{ledge['description']}{(len(title) - len(ledge_dict)) * ' '}{ledge['amount']}"
+                display += f"{ledge['description']}{(len(title) - len(ledge_dict)) * ' '}{str(round(ledge['amount'], 2))[:NUM_OF_DIGITS-1]}"
             display += '\n'
             print(len(title), len(ledge_dict))
+
+        total = self.get_balance()
+        display += f"Total: {total}"
 
         return display
     
@@ -83,11 +95,13 @@ class Category:
         return True
 
 food = Category("Food")
-food.deposit(1000, "deposit")
-food.withdraw(10.15, "groceries")
+food.deposit(1000.1234, "deposit")
+food.withdraw(10.150, "groceries")
 food.withdraw(15.89, "restaurant and more food for dessert")
+
 clothing = Category("Clothing")
 food.transfer(50, clothing)
+
 print(food)
 
 def create_spend_chart(categories):
