@@ -183,10 +183,10 @@ def create_spend_chart(categories):
 
     for index, percentage in enumerate(percentages):
         for pace in range(100, -10, -10):
-            print('porcentagem: ', pace)
+            # print('porcentagem: ', pace)
             if percentage['percent'] == pace:
                 for i, value in enumerate(chart):
-                    print('index no chart:', i, '\nvalue[percent]:', value['percent'])
+                    # print('index no chart:', i, '\nvalue[percent]:', value['percent'])
                     if value['percent'] == pace:
                         chart[i]['line'][index+1] = ' o '
                         for pos in range(i+1, len(chart)):
@@ -205,7 +205,19 @@ def create_spend_chart(categories):
             num_spaces_added = len(biggest_name) - len(name)
             for _ in range(num_spaces_added):
                 name.append(' ')
-            
+
+
+    letters = []
+    for letter in range(len(biggest_name)):
+        for index in range(len(categories_names)):
+            print(categories_names[index][letter])
+            if index == 0:
+                letters.append(f'     {categories_names[index][letter]} ')
+            else:
+                letters.append(f' {categories_names[index][letter]} ')
+        chart.append({'percent': None, 'line': letters})
+        letters = []
+        print('***')
         
     print(categories_names)
 
