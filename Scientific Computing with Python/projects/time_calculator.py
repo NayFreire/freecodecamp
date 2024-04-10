@@ -78,23 +78,38 @@ def add_time(start, duration, day=None):
     
     # In case it has been one day
     if added_days == 1:
+        if day:
+            index_day = days.index(day.lower())
+            if index_day < len(days) - 1:
+                index_day += 1
+                day = days[index_day].capitalize()
+            else:
+                day = days[0].capitalize()
+            string_return += f", {day}"
         string_return += ' (next day)'
+            
     
     # In case it has been more than one day
     if added_days > 1:
+        if day:
+            index_day = days.index(day.lower())
+            if (added_days + index_day) > 6:
+                new_index = int((added_days + index_day) / 7)
+                new_index = (added_days + index_day) - (new_index * 7)
+                day = days[new_index].capitalize()
+            else:
+                day = days[index_day + added_days].capitalize()
+                    
+            string_return += f", {day}"
         string_return += f" ({added_days} days later)"
 
-    # If there's a day of the week
-    if day:
-        return f"{string_return}, {day}"
-    else:
-        return string_return
+    return string_return
 
 # print(add_time('3:00 PM', '3:10'))  # Output: 6:10 PM
 # print(add_time('11:30 AM', '2:32', 'Monday'))  # Output: 2:02 PM, Monday
 # print(add_time('11:43 AM', '00:20'))  # Output: 12:03 PM
 # print(add_time('10:10 PM', '3:30'))  # Output: 1:40 AM (next day)
-# print(add_time('11:43 PM', '24:20', 'tueSday'))  # Output: 12:03 AM, Thursday (2 days later)
+print(add_time('11:43 PM', '24:20', 'tueSday'))  # Output: 12:03 AM, Thursday (2 days later)
 # print(add_time('6:30 PM', '205:12'))  # Output: 7:42 AM (9 days later)
 
 # print(add_time('2:59 AM', '24:00'))
@@ -103,5 +118,8 @@ def add_time(start, duration, day=None):
 # print(add_time('8:16 PM', '466:02', 'tuesday'))
 # Returns: '6:18 AM, Monday (20 days later)'
 
-print(add_time('11:55 AM', '3:12'))
+# print(add_time('11:55 AM', '3:12'))
 # Returns: '3:07 PM'
+
+# print(add_time('2:59 AM', '24:00', 'saturDay'))
+# Returns: '2:59 AM, Sunday (next day)'
