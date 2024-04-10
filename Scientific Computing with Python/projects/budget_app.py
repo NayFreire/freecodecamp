@@ -10,7 +10,7 @@ class Category:
         self.ledger = []
 
     """
-    When the budget object is printed it should display:
+    6 - When the budget object is printed it should display:
 
     - A title line of 30 characters where the name of the category is centered in a line of * characters.
     - A list of the items in the ledger. Each line should show the description and amount. The first 23 characters of the description should be displayed, then the amount. The amount should be right aligned, contain two decimal places, and display a maximum of 7 characters.
@@ -84,7 +84,7 @@ class Category:
         return False
     
     """
-    A check_funds method that accepts an amount as an argument. It returns False if the amount is greater than the balance of the budget category and returns True otherwise. This method should be used by both the withdraw method and transfer method.
+    5 - A check_funds method that accepts an amount as an argument. It returns False if the amount is greater than the balance of the budget category and returns True otherwise. This method should be used by both the withdraw method and transfer method.
     """
 
     def check_funds(self, amount):
@@ -93,6 +93,10 @@ class Category:
         if amount > balance:
             return False
         return True
+    
+    def get_spending(self):
+        spending = 0
+        spending = sum([spend['amount'] for spend in self.ledger if spend['amount'] < 0]) * -1
 
 food = Category("Food")
 food.deposit(1000.1234, "deposit")
@@ -103,6 +107,14 @@ clothing = Category("Clothing")
 food.transfer(50, clothing)
 
 print(food)
+
+food.get_spending()
+
+"""
+7 - Besides the Category class, create a function (outside of the class) called create_spend_chart that takes a list of categories as an argument. It should return a string that is a bar chart.
+
+The chart should show the percentage spent in each category passed in to the function. The percentage spent should be calculated only with withdrawals and not with deposits. Down the left side of the chart should be labels 0 - 100. The "bars" in the bar chart should be made out of the "o" character. The height of each bar should be rounded down to the nearest 10. The horizontal line below the bars should go two spaces past the final bar. Each category name should be written vertically below the bar. There should be a title at the top that says "Percentage spent by category".
+"""
 
 def create_spend_chart(categories):
     pass
