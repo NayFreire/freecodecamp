@@ -1,6 +1,7 @@
 """
 Complete the Category class. It should be able to instantiate objects based on different budget categories like food, clothing, and entertainment. When objects are created, they are passed in the name of the category. The class should have an instance variable called ledger that is a list.
 """
+NUM_OF_ASTERISKS = 30
 
 class Category:
     def __init__(self, category):
@@ -8,13 +9,22 @@ class Category:
         self.ledger = []
 
     def __str__(self):
-        display = f"{'*' * 15}{self.category}{'*' * 15}"
-        display += '\n'
+        display = ''
+        total_of_asterisks = NUM_OF_ASTERISKS - len(self.category)
+
+        title = f"{'*' * int(total_of_asterisks/2)}{self.category}{'*' * int(total_of_asterisks/2)}"
+
+        display += title + '\n'
 
         for ledge in self.ledger:
-            # print(ledge)
-            display += f"{ledge['description']}   {ledge['amount']}"
+            ledge_dict = f"{ledge['description']}{ledge['amount']}"
+            if len(ledge_dict) > len(title):
+                new_size = len(title) - len(str(ledge['amount']))
+                display += f"{ledge['description'][:new_size-1]}{' '}{ledge['amount']}"
+            else:
+                display += f"{ledge['description']}{(len(title) - len(ledge_dict)) * ' '}{ledge['amount']}"
             display += '\n'
+            print(len(title), len(ledge_dict))
 
         return display
     
@@ -72,26 +82,13 @@ class Category:
             return False
         return True
 
-food_cat = Category("Food")
-food_cat.deposit(100, 'cheese')
-food_cat.deposit(30, 'rice')
-food_cat.withdraw(15, 'acai')
-print(food_cat.get_balance())
-
-health_cat = Category("Health")
-health_cat.deposit(20)
-health_cat.withdraw(5, 'dipirona')
-# print(health_cat.get_balence())
-
-print(food_cat.transfer(50, health_cat))
-
-# print(food_cat.ledger)
-# print(health_cat.ledger)
-# print(food_cat.get_balance())
-
-# print(food_cat, health_cat.category)
-
-print(food_cat)
+food = Category("Food")
+food.deposit(1000, "deposit")
+food.withdraw(10.15, "groceries")
+food.withdraw(15.89, "restaurant and more food for dessert")
+clothing = Category("Clothing")
+food.transfer(50, clothing)
+print(food)
 
 def create_spend_chart(categories):
     pass
