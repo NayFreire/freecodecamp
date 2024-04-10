@@ -95,8 +95,7 @@ class Category:
         return True
     
     def get_spending(self):
-        spending = 0
-        spending = sum([spend['amount'] for spend in self.ledger if spend['amount'] < 0]) * -1
+        return sum([spend['amount'] for spend in self.ledger if spend['amount'] < 0]) * -1
 
 food = Category("Food")
 food.deposit(1000.1234, "deposit")
@@ -106,7 +105,15 @@ food.withdraw(15.89, "restaurant and more food for dessert")
 clothing = Category("Clothing")
 food.transfer(50, clothing)
 
+# clothing.withdraw(10, "test")
+
+health = Category("Health")
+health.deposit(300, "deposit")
+health.withdraw(56, "ritalina")
+health.withdraw(30, 'carbamazepina')
+
 print(food)
+print(clothing)
 
 food.get_spending()
 
@@ -116,5 +123,46 @@ food.get_spending()
 The chart should show the percentage spent in each category passed in to the function. The percentage spent should be calculated only with withdrawals and not with deposits. Down the left side of the chart should be labels 0 - 100. The "bars" in the bar chart should be made out of the "o" character. The height of each bar should be rounded down to the nearest 10. The horizontal line below the bars should go two spaces past the final bar. Each category name should be written vertically below the bar. There should be a title at the top that says "Percentage spent by category".
 """
 
+def get_total_spent(categories):
+    total_spent = []
+    for category in categories:
+        spending = category.get_spending()
+        print(category.category, spending)
+
+        total_spent.append({'category': category.category, 'spent':spending})
+    return total_spent
+
+def get_percentages(total_spent, sum_spent):
+    percentages = []
+    for spent in total_spent:
+        percentage = (spent['spent'] * 100) / sum_spent
+        percentages.append({'category': spent['category'], 'percent': int(percentage)})
+    return percentages
+
+def rounded_down_percentages(percentages):
+    for percentage in percentages:
+        new_percentage = int(percentage['percent'] / 10)
+        new_percentage = new_percentage * 10
+        percentage['percent'] = new_percentage
+    return percentages
+
 def create_spend_chart(categories):
-    pass
+    percentages = []
+    chart = ''
+
+    total_spent = get_total_spent(categories)
+
+    sum_spent = sum([int(spent['spent']) for spent in total_spent])
+    print(total_spent, sum_spent)
+
+    percentages = get_percentages(total_spent, sum_spent)
+    print(percentages)
+
+    percentages = rounded_down_percentages(percentages)
+    print(percentages)
+
+    chart += 'Percentage spent by category\n'
+    chart += '100|'
+
+
+create_spend_chart([health, food, clothing])
