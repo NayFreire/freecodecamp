@@ -39,27 +39,35 @@ class Category:
     4 - A transfer method that accepts an amount and another budget category as arguments. The method should add a withdrawal with the amount and the description "Transfer to [Destination Budget Category]". The method should then add a deposit to the other budget category with the amount and the description "Transfer from [Source Budget Category]". If there are not enough funds, nothing should be added to either ledgers. This method should return True if the transfer took place, and False otherwise.
     """
 
-    def transfer(self, amount, destination, source):
-        self.withdraw(amount, f"Transfer to {destination.category}")
-        self.deposit(amount, f"Transfer from {source.category}")
+    def transfer(self, amount, destination):
+        total_amount = sum(ledge['amount'] for ledge in self.ledger)
+        
+        if total_amount >= amount:
+            self.withdraw(amount, f"Transfer to {destination.category}")
+            destination.deposit(amount, f"Transfer from {self.category}")
+
+            return True
+        else:
+            return False
 
 food_cat = Category("Food")
 food_cat.deposit(100, 'cheese')
 food_cat.deposit(30, 'rice')
-print(food_cat.withdraw(15, 'acai'))
+food_cat.withdraw(15, 'acai')
 print(food_cat.get_balence())
 
 health_cat = Category("Health")
 health_cat.deposit(20)
-print(health_cat.withdraw(5, 'dipirona'))
-print(health_cat.get_balence())
+health_cat.withdraw(5, 'dipirona')
+# print(health_cat.get_balence())
 
-food_cat.transfer(50, health_cat, food_cat)
+print(food_cat.transfer(50, health_cat))
 
 print(food_cat.ledger)
 print(health_cat.ledger)
+print(food_cat.get_balence())
 
-print(food_cat, health_cat.category)
+# print(food_cat, health_cat.category)
 
 
 
