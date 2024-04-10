@@ -148,7 +148,7 @@ def rounded_down_percentages(percentages):
 
 def create_spend_chart(categories):
     percentages = []
-    chart = ''
+    chart = []
 
     total_spent = get_total_spent(categories)
 
@@ -161,8 +161,41 @@ def create_spend_chart(categories):
     percentages = rounded_down_percentages(percentages)
     print(percentages)
 
-    chart += 'Percentage spent by category\n'
-    chart += '100|'
+    chart.append({'percent': None, 'line': ['Percentage spent by category\n']})
+    chart.append({'percent': 100, 'line': ['100|']})
+    chart.append({'percent': 90, 'line': [' 90|']})
+    chart.append({'percent': 80, 'line': [' 80|']})
+    chart.append({'percent': 70, 'line': [' 70|']})
+    chart.append({'percent': 60, 'line': [' 60|']})
+    chart.append({'percent': 50, 'line': [' 50|']})
+    chart.append({'percent': 40, 'line': [' 40|']})
+    chart.append({'percent': 30, 'line': [' 30|']})
+    chart.append({'percent': 20, 'line': [' 20|']})
+    chart.append({'percent': 10, 'line': [' 10|']})
+    chart.append({'percent': 0, 'line': [' 0|']})
 
+    for index, list_line in enumerate(chart):
+        if index != 0:
+            for pos in range(len(categories) + 1):
+                list_line['line'].append(' ')
+            
+                
+
+    for index, percentage in enumerate(percentages):
+        if percentage['percent'] == 50:
+            for i, value in enumerate(chart):
+                if value['percent'] == 50:
+                    chart[i]['line'][index+1] = ' o '
+                    for pos in range(i+1, len(chart)):
+                        chart[pos]['line'][index+1] = ' o '
+                else:
+                    if i + 1 <= len(chart):
+                        chart[i+1]['line'][index+1] = '   '
+    
+    categories_names = []
+
+    for category in categories: 
+        letters = [letter for letter in category.category]
+        categories_names.append(letters)
 
 create_spend_chart([health, food, clothing])
