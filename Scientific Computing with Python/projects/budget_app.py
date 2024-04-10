@@ -197,5 +197,16 @@ def create_spend_chart(categories):
     for category in categories: 
         letters = [letter for letter in category.category]
         categories_names.append(letters)
+    
+    biggest_name = max(categories_names, key=len)
+    
+    for name in categories_names:
+        if name != biggest_name:
+            num_spaces_added = len(biggest_name) - len(name)
+            for _ in range(num_spaces_added):
+                name.append(' ')
+            
+        
+    print(categories_names)
 
 create_spend_chart([health, food, clothing])
