@@ -32,6 +32,7 @@ def get_individual_numbers(start, duration):
 
 def add_time(start, duration, day=None):
     added_days = 0
+    next_day = False
     days = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday']
 
     # Unpacking individual numbers
@@ -62,6 +63,7 @@ def add_time(start, duration, day=None):
     if new_hour > 12 and start_period == 'PM':
         new_hour = new_hour - 12
         start_period = 'AM'
+        next_day = True # Goining pm to am goes to another day
     elif new_hour > 12 and start_period == 'AM':
         new_hour = new_hour - 12
         start_period = 'PM'
@@ -76,8 +78,12 @@ def add_time(start, duration, day=None):
 
     string_return = f"{new_hour}:{new_minute}{' ' + start_period}"
     
+    # Verifying if it should have the "next day" if id doesn't have added_days
+    if next_day and added_days <= 1:
+        string_return += ' (next day)'
+        
     # In case it has been one day
-    if added_days == 1:
+    elif added_days == 1:
         if day:
             index_day = days.index(day.lower())
             if index_day < len(days) - 1:
@@ -102,20 +108,24 @@ def add_time(start, duration, day=None):
                     
             string_return += f", {day}"
         string_return += f" ({added_days} days later)"
+    
+    # If not days were added nut the day was passed
+    if added_days == 0 and day:
+        string_return += f", {day}"
 
     return string_return
 
 # print(add_time('3:00 PM', '3:10'))  # Output: 6:10 PM
 # print(add_time('11:30 AM', '2:32', 'Monday'))  # Output: 2:02 PM, Monday
 # print(add_time('11:43 AM', '00:20'))  # Output: 12:03 PM
-# print(add_time('10:10 PM', '3:30'))  # Output: 1:40 AM (next day)
-print(add_time('11:43 PM', '24:20', 'tueSday'))  # Output: 12:03 AM, Thursday (2 days later)
+print(add_time('10:10 PM', '3:30'))  # Output: 1:40 AM (next day)
+# print(add_time('11:43 PM', '24:20', 'tueSday'))  # Output: 12:03 AM, Thursday (2 days later)
 # print(add_time('6:30 PM', '205:12'))  # Output: 7:42 AM (9 days later)
 
 # print(add_time('2:59 AM', '24:00'))
 # Returns: 2:59 AM (next day)
 
-# print(add_time('8:16 PM', '466:02', 'tuesday'))
+print(add_time('8:16 PM', '466:02', 'tuesday'))
 # Returns: '6:18 AM, Monday (20 days later)'
 
 # print(add_time('11:55 AM', '3:12'))
@@ -123,3 +133,6 @@ print(add_time('11:43 PM', '24:20', 'tueSday'))  # Output: 12:03 AM, Thursday (2
 
 # print(add_time('2:59 AM', '24:00', 'saturDay'))
 # Returns: '2:59 AM, Sunday (next day)'
+
+# print(add_time('3:30 PM', '2:12', 'Monday'))
+#  Returns: '5:42 PM, Monday'
