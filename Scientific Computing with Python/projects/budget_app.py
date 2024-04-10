@@ -6,7 +6,18 @@ class Category:
     def __init__(self, category):
         self.category = category
         self.ledger = []
-            
+
+    def __str__(self):
+        display = f"{'*' * 15}{self.category}{'*' * 15}"
+        display += '\n'
+
+        for ledge in self.ledger:
+            # print(ledge)
+            display += f"{ledge['description']}   {ledge['amount']}"
+            display += '\n'
+
+        return display
+    
     """
     The class should also contain the following methods:
 
@@ -74,13 +85,13 @@ health_cat.withdraw(5, 'dipirona')
 
 print(food_cat.transfer(50, health_cat))
 
-print(food_cat.ledger)
-print(health_cat.ledger)
-print(food_cat.get_balance())
+# print(food_cat.ledger)
+# print(health_cat.ledger)
+# print(food_cat.get_balance())
 
 # print(food_cat, health_cat.category)
 
-
+print(food_cat)
 
 def create_spend_chart(categories):
     pass
