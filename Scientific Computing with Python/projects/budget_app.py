@@ -21,8 +21,9 @@ class Category:
     """
 
     def withdraw(self, amount, description=''):
-        total_amount = sum(ledge['amount'] for ledge in self.ledger)
-        if total_amount >= amount:
+        can_transfer = self.check_funds(amount)
+
+        if can_transfer:
             self.ledger.append({"amount": amount * -1, "description": description})
 
             return True
@@ -32,7 +33,7 @@ class Category:
     3 - A get_balance method that returns the current balance of the budget category based on the deposits and withdrawals that have occurred.
     """
 
-    def get_balence(self):
+    def get_balance(self):
         return sum(ledge['amount'] for ledge in self.ledger)
     
     """
@@ -40,21 +41,31 @@ class Category:
     """
 
     def transfer(self, amount, destination):
-        total_amount = sum(ledge['amount'] for ledge in self.ledger)
+        can_transfer = self.check_funds(amount)
         
-        if total_amount >= amount:
+        if can_transfer:
             self.withdraw(amount, f"Transfer to {destination.category}")
             destination.deposit(amount, f"Transfer from {self.category}")
 
             return True
-        else:
+        return False
+    
+    """
+    A check_funds method that accepts an amount as an argument. It returns False if the amount is greater than the balance of the budget category and returns True otherwise. This method should be used by both the withdraw method and transfer method.
+    """
+
+    def check_funds(self, amount):
+        balance = self.get_balance()
+
+        if amount > balance:
             return False
+        return True
 
 food_cat = Category("Food")
 food_cat.deposit(100, 'cheese')
 food_cat.deposit(30, 'rice')
 food_cat.withdraw(15, 'acai')
-print(food_cat.get_balence())
+print(food_cat.get_balance())
 
 health_cat = Category("Health")
 health_cat.deposit(20)
@@ -65,7 +76,7 @@ print(food_cat.transfer(50, health_cat))
 
 print(food_cat.ledger)
 print(health_cat.ledger)
-print(food_cat.get_balence())
+print(food_cat.get_balance())
 
 # print(food_cat, health_cat.category)
 
