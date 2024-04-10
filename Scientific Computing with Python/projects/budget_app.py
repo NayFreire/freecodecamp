@@ -213,6 +213,8 @@ def create_spend_chart(categories):
             print(categories_names[index][letter])
             if index == 0:
                 letters.append(f'     {categories_names[index][letter]} ')
+            elif index == len(categories_names) - 1:
+                letters.append(f' {categories_names[index][letter]}  ')
             else:
                 letters.append(f' {categories_names[index][letter]} ')
         chart.append({'percent': None, 'line': letters})
