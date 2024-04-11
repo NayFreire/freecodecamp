@@ -14,6 +14,13 @@ When a Rectangle object is created, it should be initialized with width and heig
 Additionally, if an instance of a Rectangle is represented as a string, it should look like: Rectangle(width=5, height=10)
 """
 class Rectangle:
+    def __init__(self, width=None, height=None):
+        self.width = width
+        self.height = height
+
+    def __str__(self):
+        return f"Rectangle(width={self.width}, height={self.height})"
+
     def set_width(self, width):
         self.width = width
     
@@ -63,15 +70,35 @@ Additionally, the set_width and set_height methods on the Square class should se
 """
 
 class Square(Rectangle):
-    pass
+    def __init__(self, side=None):
+        self.width = side
+        self.height = side
+
+    def __str__(self):
+        return f"Square(side={self.width})"
+        
+    def set_side(self, side):
+        self.width = side
+        self.height = side
+    
+    def set_width(self, width):
+        self.width = width
+        self.height = width
+    
+    def set_height(self, height):
+        self.height = height
+        self.width = height
 
 
 rec = Rectangle()
 rec.set_width(10)
 rec.set_height(4)
 
-sq = Rectangle()
-sq.set_width(3)
-sq.set_height(1)
+sq = Square(5)
+print(Rectangle(4, 3))
+
+sq.set_width(10)
+print(sq)
+
 
 print(rec.get_amount_inside(sq))
