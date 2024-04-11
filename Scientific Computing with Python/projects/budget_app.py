@@ -201,38 +201,51 @@ def create_spend_chart(categories):
 
     string_chart = ''
 
-    for line in chart:
+    for index, line in enumerate(chart):
         # for item in line['line']:
         #     print(f">{item}< | {len(item)}")
         #     string_chart += item
         string_line = ''.join(line['line'])
         string_chart += repr(string_line).replace("'", "")
-        string_chart += '\n'
+        if index != len(chart) - 1:
+            string_chart += '\n'
         
     print(string_chart, len(string_chart))
+    print(chart)
     # print(chart)
 
 
+# food = Category("Food")
+# food.deposit(1000.1234, "deposit")
+# food.withdraw(10.150, "groceries")
+# food.withdraw(15.89, "restaurant and more food for dessert")
+
+# clothing = Category("Clothing")
+# food.transfer(50.33, clothing)
+
+# # clothing.withdraw(10, "test")
+
+# health = Category("Health")
+# health.deposit(300.52, "deposit")
+# health.withdraw(56.130, "ritalina")
+# health.withdraw(30.31, 'carbamazepina')
+
 food = Category("Food")
-food.deposit(1000.1234, "deposit")
-food.withdraw(10.150, "groceries")
-food.withdraw(15.89, "restaurant and more food for dessert")
+entertainment = Category("Entertainment")
+business = Category("Business")
 
-clothing = Category("Clothing")
-food.transfer(50.33, clothing)
+food.deposit(900, "deposit")
+entertainment.deposit(900, "deposit")
+business.deposit(900, "deposit")
+food.withdraw(105.55)
+entertainment.withdraw(33.40)
+business.withdraw(10.99)
 
-# clothing.withdraw(10, "test")
+# print(health)
 
-health = Category("Health")
-health.deposit(300.52, "deposit")
-health.withdraw(56.130, "ritalina")
-health.withdraw(30.31, 'carbamazepina')
-
-print(health)
-
-print(food)
-print(clothing)
+# print(food)
+# print(clothing)
 
 # food.get_spending()
 
-# create_spend_chart([health, food, clothing])
+create_spend_chart([business, food, entertainment])
