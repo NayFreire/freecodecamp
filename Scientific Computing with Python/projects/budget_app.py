@@ -18,27 +18,18 @@ class Category:
     """
 
     def __str__(self):
-        display = ''
-        total_of_asterisks = NUM_OF_ASTERISKS - len(self.category)
+        title = f"{self.category:*^30}"
+        items = ''
+        total = 0
 
-        title = f"{'*' * int(total_of_asterisks/2)}{self.category}{'*' * int(total_of_asterisks/2)}"
-
-        display += title + '\n'
-
-        for ledge in self.ledger:
-            ledge_dict = f"{ledge['description']}{str(round(ledge['amount'], 2))[:NUM_OF_DIGITS-1]}"
-            if len(ledge_dict) > len(title):
-                new_size = len(title) - len(str(ledge['amount']))
-                display += f"{ledge['description'][:new_size-1]}{' '}{str(round(ledge['amount'], 2))[:NUM_OF_DIGITS-1]}"
-            else:
-                display += f"{ledge['description']}{(len(title) - len(ledge_dict)) * ' '}{str(round(ledge['amount'], 2))[:NUM_OF_DIGITS-1]}"
-            display += '\n'
-            # print(len(title), len(ledge_dict))
-
-        total = self.get_balance()
-        display += f"Total: {total}"
-
-        return display
+        for transaction in self.ledger:
+            description = transaction['description'][:23]
+            amount = transaction['amount']
+            total += amount
+            items += f'{description:<23}{amount:>7.2f}\n'
+        
+        output = title + '\n' + items + f'Total: {total:.2f}'
+        return output
     
     """
     The class should also contain the following methods:
@@ -67,7 +58,7 @@ class Category:
     """
 
     def get_balance(self):
-        return sum(ledge['amount'] for ledge in self.ledger)
+        return round(sum(ledge['amount'] for ledge in self.ledger), 2)
     
     """
     4 - A transfer method that accepts an amount and another budget category as arguments. The method should add a withdrawal with the amount and the description "Transfer to [Destination Budget Category]". The method should then add a deposit to the other budget category with the amount and the description "Transfer from [Source Budget Category]". If there are not enough funds, nothing should be added to either ledgers. This method should return True if the transfer took place, and False otherwise.
@@ -96,26 +87,6 @@ class Category:
     
     def get_spending(self):
         return sum([spend['amount'] for spend in self.ledger if spend['amount'] < 0]) * -1
-
-food = Category("Food")
-food.deposit(1000.1234, "deposit")
-food.withdraw(10.150, "groceries")
-food.withdraw(15.89, "restaurant and more food for dessert")
-
-clothing = Category("Clothing")
-food.transfer(50, clothing)
-
-# clothing.withdraw(10, "test")
-
-health = Category("Health")
-health.deposit(300, "deposit")
-health.withdraw(56, "ritalina")
-health.withdraw(30, 'carbamazepina')
-
-# print(food)
-# print(clothing)
-
-food.get_spending()
 
 """
 7 - Besides the Category class, create a function (outside of the class) called create_spend_chart that takes a list of categories as an argument. It should return a string that is a bar chart.
@@ -241,4 +212,27 @@ def create_spend_chart(categories):
     print(string_chart, len(string_chart))
     # print(chart)
 
-create_spend_chart([health, food, clothing])
+
+food = Category("Food")
+food.deposit(1000.1234, "deposit")
+food.withdraw(10.150, "groceries")
+food.withdraw(15.89, "restaurant and more food for dessert")
+
+clothing = Category("Clothing")
+food.transfer(50.33, clothing)
+
+# clothing.withdraw(10, "test")
+
+health = Category("Health")
+health.deposit(300.52, "deposit")
+health.withdraw(56.130, "ritalina")
+health.withdraw(30.31, 'carbamazepina')
+
+print(health)
+
+print(food)
+print(clothing)
+
+# food.get_spending()
+
+# create_spend_chart([health, food, clothing])
