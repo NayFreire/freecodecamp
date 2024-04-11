@@ -177,7 +177,10 @@ def create_spend_chart(categories):
     for index, list_line in enumerate(chart):
         if index != 0:
             for pos in range(len(categories) + 1):
-                list_line['line'].append('   ')
+                if not pos == len(categories):
+                    list_line['line'].append('   ')
+                else:
+                    list_line['line'].append(' ')
             
                 
 
@@ -192,7 +195,7 @@ def create_spend_chart(categories):
                         for pos in range(i+1, len(chart)):
                             chart[pos]['line'][index+1] = ' o '
     
-    chart.append({'percent': None, 'line': [f"    {'-' * (len(categories) * 3)}--"]})
+    chart.append({'percent': None, 'line': [f"    {'-' * (len(categories) * 3)}-"]})
     
     categories_names = []
 
