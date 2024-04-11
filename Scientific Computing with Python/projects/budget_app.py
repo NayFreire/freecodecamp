@@ -117,102 +117,60 @@ def rounded_down_percentages(percentages):
         percentage['percent'] = new_percentage
     return percentages
 
+def getTotals(categories):
+    total = 0
+    breakdown = []
+    for category in categories:
+        total += category.get_spending()
+        breakdown.append(category.get_spending())
+    rounded = list(map(lambda x: truncate(x/total), breakdown))
+    return rounded
+
+def truncate(n):
+    multiplier = 10
+    return int(n * multiplier) / multiplier
+
 def create_spend_chart(categories):
-    percentages = []
-    chart = []
+    """
+    create_spend_chart that takes a list of categories as an argument. It should return a string that is a bar chart
+    """
+    res = "Percentage spent by category\n"
+    i = 100
+    totals = getTotals(categories)
+    while i >= 0:
+          cat_spaces = " "
+          for total in totals:
+              if total * 100 >= i:
+                  cat_spaces += "o  "
+              else:
+                  cat_spaces += "   "
+          res+= str(i).rjust(3) + "|" + cat_spaces + ("\n")
+          i-=10
+      
+    dashes = "-" + "---"*len(categories)
+    names = []
+    x_axis = ""
+    for category in categories:
+          names.append(category.category)
 
-    total_spent = get_total_spent(categories)
+    maxi = max(names, key=len)
 
-    sum_spent = sum([int(spent['spent']) for spent in total_spent])
-    # print(total_spent, sum_spent)
-
-    percentages = get_percentages(total_spent, sum_spent)
-    # print(percentages)
-
-    percentages = rounded_down_percentages(percentages)
-    # print(percentages)
-
-    chart.append({'percent': None, 'line': ['Percentage spent by category']})
-    chart.append({'percent': 100, 'line': ['100|']})
-    chart.append({'percent': 90, 'line': [' 90|']})
-    chart.append({'percent': 80, 'line': [' 80|']})
-    chart.append({'percent': 70, 'line': [' 70|']})
-    chart.append({'percent': 60, 'line': [' 60|']})
-    chart.append({'percent': 50, 'line': [' 50|']})
-    chart.append({'percent': 40, 'line': [' 40|']})
-    chart.append({'percent': 30, 'line': [' 30|']})
-    chart.append({'percent': 20, 'line': [' 20|']})
-    chart.append({'percent': 10, 'line': [' 10|']})
-    chart.append({'percent': 0, 'line': ['  0|']})
-
-    for index, list_line in enumerate(chart):
-        if index != 0:
-            for pos in range(len(categories) + 1):
-                if not pos == len(categories):
-                    list_line['line'].append('   ')
-                else:
-                    list_line['line'].append(' ')
-            
-                
-
-    for index, percentage in enumerate(percentages):
-        for pace in range(100, -10, -10):
-            # print('porcentagem: ', pace)
-            if percentage['percent'] == pace:
-                for i, value in enumerate(chart):
-                    # print('index no chart:', i, '\nvalue[percent]:', value['percent'])
-                    if value['percent'] == pace:
-                        chart[i]['line'][index+1] = ' o '
-                        for pos in range(i+1, len(chart)):
-                            chart[pos]['line'][index+1] = ' o '
-    
-    chart.append({'percent': None, 'line': [f"    {'-' * (len(categories) * 3)}-"]})
-    
-    categories_names = []
-
-    for category in categories: 
-        letters = [letter for letter in category.category]
-        categories_names.append(letters)
-    
-    biggest_name = max(categories_names, key=len)
-    
-    for name in categories_names:
-        if name != biggest_name:
-            num_spaces_added = len(biggest_name) - len(name)
-            for _ in range(num_spaces_added):
-                name.append(' ')
-
-
-    letters = []
-    for letter in range(len(biggest_name)):
-        for index in range(len(categories_names)):
-            # print(categories_names[index][letter])
-            if index == 0:
-                letters.append(f'     {categories_names[index][letter]} ')
-            elif index == len(categories_names) - 1:
-                letters.append(f' {categories_names[index][letter]}  ')
-            else:
-                letters.append(f' {categories_names[index][letter]} ')
-        chart.append({'percent': None, 'line': letters})
-        letters = []
-        # print('***')
+    for x in range(len(maxi)):
+        nameStr = '     '
+        for name in names:
+              if x >= len(name):
+                  nameStr += "   "
+              else:
+                  nameStr += name[x] + "  "
         
-    # print(categories_names)
+        if(x != len(maxi) -1 ):
+          nameStr += '\n'
 
-    string_chart = ''
+          
+        x_axis += nameStr
 
-    for index, line in enumerate(chart):
-        # for item in line['line']:
-        #     print(f">{item}< | {len(item)}")
-        #     string_chart += item
-        string_line = ''.join(line['line'])
-        string_chart += repr(string_line).replace("'", "")
-        if index != len(chart) - 1:
-            string_chart += '\n'
-        
-    print(string_chart, len(string_chart))
-    print(chart)
-    # print(chart)
+    res+= dashes.rjust(len(dashes)+4) + "\n" + x_axis
+    return res
 
 
 # food = Category("Food")
@@ -248,4 +206,4 @@ business.withdraw(10.99)
 
 # food.get_spending()
 
-create_spend_chart([business, food, entertainment])
+print(create_spend_chart([business, food, entertainment]))
