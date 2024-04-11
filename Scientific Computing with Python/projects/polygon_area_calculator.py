@@ -14,7 +14,31 @@ When a Rectangle object is created, it should be initialized with width and heig
 Additionally, if an instance of a Rectangle is represented as a string, it should look like: Rectangle(width=5, height=10)
 """
 class Rectangle:
-    pass
+    def set_width(self, width):
+        self.width = width
+    
+    def set_height(self, height):
+        self.height = height
+    
+    def get_area(self):
+        return self.width * self.height
+    
+    def get_perimeter(self):
+        return (2 * self.width) + (2 * self.height)
+
+    def get_diagonal(self):
+        return ((self.width ** 2 + self.height ** 2) ** .5)
+    
+    def get_picture(self):
+        if self.width < 50 and self.height < 50:
+            string_picture = ''
+            for _ in range(self.height):
+                for _ in range(self.width):
+                    string_picture += '*'
+                string_picture += '\n'
+            
+            return string_picture
+        return "Too big for picture."
 
 
 """
@@ -25,6 +49,11 @@ The Square class should be able to access the Rectangle class methods but should
 
 Additionally, the set_width and set_height methods on the Square class should set both the width and height.
 """
+
+rec = Rectangle()
+rec.set_width(9)
+rec.set_height(3)
+print(rec.get_area())
 
 class Square(Rectangle):
     pass
