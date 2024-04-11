@@ -228,11 +228,14 @@ def create_spend_chart(categories):
     string_chart = ''
 
     for line in chart:
-        for item in line['line']:
-            string_chart += item
+        # for item in line['line']:
+        #     print(f">{item}< | {len(item)}")
+        #     string_chart += item
+        string_line = ''.join(line['line'])
+        string_chart += repr(string_line).replace("'", "")
         string_chart += '\n'
         
-    # print(string_chart, len(string_chart))
-    print(chart)
+    print(string_chart, len(string_chart))
+    # print(chart)
 
 create_spend_chart([health, food, clothing])
