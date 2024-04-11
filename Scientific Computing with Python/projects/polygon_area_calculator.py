@@ -17,8 +17,14 @@ class Rectangle:
     def set_width(self, width):
         self.width = width
     
+    def get_width(self):
+        return self.width
+    
     def set_height(self, height):
         self.height = height
+
+    def get_height(self):
+        return self.height
     
     def get_area(self):
         return self.width * self.height
@@ -39,7 +45,13 @@ class Rectangle:
             
             return string_picture
         return "Too big for picture."
+    
+    def get_amount_inside(self, shape):
+        times_in_height = int(self.get_height() / shape.get_height())
+        times_in_width = int(self.get_width() / shape.get_width())
 
+        num_times_it_fits = times_in_height * times_in_width
+        return num_times_it_fits
 
 """
 ## Square class
@@ -50,10 +62,16 @@ The Square class should be able to access the Rectangle class methods but should
 Additionally, the set_width and set_height methods on the Square class should set both the width and height.
 """
 
-rec = Rectangle()
-rec.set_width(9)
-rec.set_height(3)
-print(rec.get_area())
-
 class Square(Rectangle):
     pass
+
+
+rec = Rectangle()
+rec.set_width(10)
+rec.set_height(4)
+
+sq = Rectangle()
+sq.set_width(3)
+sq.set_height(1)
+
+print(rec.get_amount_inside(sq))
