@@ -33,7 +33,7 @@ class Category:
             else:
                 display += f"{ledge['description']}{(len(title) - len(ledge_dict)) * ' '}{str(round(ledge['amount'], 2))[:NUM_OF_DIGITS-1]}"
             display += '\n'
-            print(len(title), len(ledge_dict))
+            # print(len(title), len(ledge_dict))
 
         total = self.get_balance()
         display += f"Total: {total}"
@@ -112,8 +112,8 @@ health.deposit(300, "deposit")
 health.withdraw(56, "ritalina")
 health.withdraw(30, 'carbamazepina')
 
-print(food)
-print(clothing)
+# print(food)
+# print(clothing)
 
 food.get_spending()
 
@@ -127,7 +127,7 @@ def get_total_spent(categories):
     total_spent = []
     for category in categories:
         spending = category.get_spending()
-        print(category.category, spending)
+        # print(category.category, spending)
 
         total_spent.append({'category': category.category, 'spent':spending})
     return total_spent
@@ -153,15 +153,15 @@ def create_spend_chart(categories):
     total_spent = get_total_spent(categories)
 
     sum_spent = sum([int(spent['spent']) for spent in total_spent])
-    print(total_spent, sum_spent)
+    # print(total_spent, sum_spent)
 
     percentages = get_percentages(total_spent, sum_spent)
-    print(percentages)
+    # print(percentages)
 
     percentages = rounded_down_percentages(percentages)
-    print(percentages)
+    # print(percentages)
 
-    chart.append({'percent': None, 'line': ['Percentage spent by category\n']})
+    chart.append({'percent': None, 'line': ['Percentage spent by category']})
     chart.append({'percent': 100, 'line': ['100|']})
     chart.append({'percent': 90, 'line': [' 90|']})
     chart.append({'percent': 80, 'line': [' 80|']})
@@ -172,7 +172,7 @@ def create_spend_chart(categories):
     chart.append({'percent': 30, 'line': [' 30|']})
     chart.append({'percent': 20, 'line': [' 20|']})
     chart.append({'percent': 10, 'line': [' 10|']})
-    chart.append({'percent': 0, 'line': [' 0|']})
+    chart.append({'percent': 0, 'line': ['  0|']})
 
     for index, list_line in enumerate(chart):
         if index != 0:
@@ -192,6 +192,8 @@ def create_spend_chart(categories):
                         for pos in range(i+1, len(chart)):
                             chart[pos]['line'][index+1] = ' o '
     
+    chart.append({'percent': None, 'line': [f"    {'-' * (len(categories) * 3)}--"]})
+    
     categories_names = []
 
     for category in categories: 
@@ -210,7 +212,7 @@ def create_spend_chart(categories):
     letters = []
     for letter in range(len(biggest_name)):
         for index in range(len(categories_names)):
-            print(categories_names[index][letter])
+            # print(categories_names[index][letter])
             if index == 0:
                 letters.append(f'     {categories_names[index][letter]} ')
             elif index == len(categories_names) - 1:
@@ -219,8 +221,18 @@ def create_spend_chart(categories):
                 letters.append(f' {categories_names[index][letter]} ')
         chart.append({'percent': None, 'line': letters})
         letters = []
-        print('***')
+        # print('***')
         
-    print(categories_names)
+    # print(categories_names)
+
+    string_chart = ''
+
+    for line in chart:
+        for item in line['line']:
+            string_chart += item
+        string_chart += '\n'
+        
+    # print(string_chart, len(string_chart))
+    print(chart)
 
 create_spend_chart([health, food, clothing])
