@@ -40,6 +40,21 @@ class Hat:
             contents.append('green')
 
         self.contents = contents
+    
+    def draw(self, number_of_balls):
+        if number_of_balls > len(self.contents):
+            return self.contents
+        
+        draw_balls = []
+        for _ in range(number_of_balls):
+            index = random.randint(0, len(self.contents)-1)
+            draw_balls.append(self.contents[index])
+            del self.contents[index]
+        return draw_balls
 
 def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
     pass
+
+hat = Hat(red=3, blue=2)
+print(hat.contents)
+print(hat.draw(3), hat.contents)
