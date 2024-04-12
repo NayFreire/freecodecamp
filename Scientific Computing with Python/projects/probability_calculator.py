@@ -30,14 +30,11 @@ import copy
 import random
 
 class Hat:
-    def __init__(self, red=0, blue=0, green=0):
+    def __init__(self, **kwargs):
         contents = []
-        for _ in range(red):
-            contents.append('red')
-        for _ in range(blue):
-            contents.append('blue')
-        for _ in range(green):
-            contents.append('green')
+        for color, quantity in kwargs.items():
+            for _ in range(quantity):
+                contents.append(color)
 
         self.contents = contents
         self.copy_contents = copy.copy(contents)
@@ -67,3 +64,9 @@ def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
 # print(hat.draw(3), hat.contents, hat.copy_contents)
 
 # experiment(hat, {'red': 2, 'green': 1}, 4, 3)
+
+hat1 = Hat(yellow=3, blue=2, green=6)
+hat2 = Hat(red=5, orange=4)
+hat3 = Hat(red=5, orange=4, black=1, blue=0, pink=2, striped=9)
+
+print(hat1, '\n', hat2, '\n', hat3)
