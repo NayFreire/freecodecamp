@@ -40,6 +40,10 @@ class Hat:
             contents.append('green')
 
         self.contents = contents
+        self.copy_contents = copy.copy(contents)
+    
+    def __str__(self):
+        return f"Hat={self.contents}"
     
     def draw(self, number_of_balls):
         if number_of_balls > len(self.contents):
@@ -53,8 +57,13 @@ class Hat:
         return draw_balls
 
 def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
-    pass
+    print(hat, expected_balls, num_balls_drawn, num_experiments)
 
-hat = Hat(red=3, blue=2)
-print(hat.contents)
-print(hat.draw(3), hat.contents)
+    for _ in range(num_experiments):
+        hat.draw(num_balls_drawn)
+
+# hat = Hat(red=4, blue=3, green=2)
+
+# print(hat.draw(3), hat.contents, hat.copy_contents)
+
+# experiment(hat, {'red': 2, 'green': 1}, 4, 3)
