@@ -138,35 +138,35 @@ def create_spend_chart(categories):
     i = 100
     totals = getTotals(categories)
     while i >= 0:
-          cat_spaces = " "
-          for total in totals:
-              if total * 100 >= i:
-                  cat_spaces += "o  "
-              else:
-                  cat_spaces += "   "
-          res+= str(i).rjust(3) + "|" + cat_spaces + ("\n")
-          i-=10
-      
+            cat_spaces = " "
+            for total in totals:
+                if total * 100 >= i:
+                    cat_spaces += "o  "
+                else:
+                    cat_spaces += "   "
+            res+= str(i).rjust(3) + "|" + cat_spaces + ("\n")
+            i-=10
+    
     dashes = "-" + "---"*len(categories)
     names = []
     x_axis = ""
     for category in categories:
-          names.append(category.category)
+        names.append(category.category)
 
     maxi = max(names, key=len)
 
     for x in range(len(maxi)):
         nameStr = '     '
         for name in names:
-              if x >= len(name):
-                  nameStr += "   "
-              else:
-                  nameStr += name[x] + "  "
+            if x >= len(name):
+                nameStr += "   "
+            else:
+                nameStr += name[x] + "  "
         
         if(x != len(maxi) -1 ):
-          nameStr += '\n'
+            nameStr += '\n'
 
-          
+        
         x_axis += nameStr
 
     res+= dashes.rjust(len(dashes)+4) + "\n" + x_axis
