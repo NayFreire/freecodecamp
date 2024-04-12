@@ -37,7 +37,7 @@ class Hat:
                 contents.append(color)
 
         self.contents = contents
-        self.copy_contents = copy.copy(contents)
+        self.copy_contents = copy.copy(self.contents)
     
     def __str__(self):
         return f"Hat={self.contents}"
@@ -54,19 +54,37 @@ class Hat:
         return draw_balls
 
 def experiment(hat, expected_balls, num_balls_drawn, num_experiments):
-    print(hat, expected_balls, num_balls_drawn, num_experiments)
+    print(expected_balls)
+    drawn_dict = {}
+    matches = 0
+    num_correct_balls = 0
+    
+    for exp in range(num_experiments):
+        drawn = hat.draw(num_balls_drawn)
+        for unique_color in set(drawn):
+            drawn_dict[unique_color] = drawn.count(unique_color)
 
-    for _ in range(num_experiments):
-        hat.draw(num_balls_drawn)
+        for color_dict, amount_dict in drawn_dict.items():
+            if (color_dict in expected_balls) and (expected_balls[color_dict] <= amount_dict):
+                matches += 1
 
-# hat = Hat(red=4, blue=3, green=2)
-
-# print(hat.draw(3), hat.contents, hat.copy_contents)
-
-# experiment(hat, {'red': 2, 'green': 1}, 4, 3)
+        if matches == len(expected_balls):
+            print(exp, ':', drawn_dict)   
+            
+            num_correct_balls += 1
+        matches = 0   
+        drawn_dict = {}
+        hat.contents = copy.copy(hat.copy_contents)
+    return num_correct_balls / num_experiments
 
 hat1 = Hat(yellow=3, blue=2, green=6)
 hat2 = Hat(red=5, orange=4)
 hat3 = Hat(red=5, orange=4, black=1, blue=0, pink=2, striped=9)
 
-print(hat1, '\n', hat2, '\n', hat3)
+hat = Hat(blue=3,red=2,green=6)
+probability = experiment(hat=hat, 
+                        expected_balls={"blue":2,"green":1}, 
+                        num_balls_drawn=4, 
+                        num_experiments=1000)
+
+print(probability)
